@@ -1,0 +1,8 @@
+name: Webpanel
+main: de.minestar.Webpanel.core.WebpanelCore
+version: ${pom.version}
+depend: [MineStarLibrary, MinestarCore]
+commands:
+  web-restart:
+    description: Restart the webpanel
+    usage: /web-restart
