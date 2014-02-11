@@ -22,6 +22,7 @@ import java.util.Map;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Server;
+import org.bukkit.entity.Player;
 
 import com.sun.net.httpserver.HttpExchange;
 
@@ -29,6 +30,7 @@ import de.minestar.Webpanel.exceptions.LoginInvalidException;
 import de.minestar.Webpanel.pagehandler.main.CustomPageHandler;
 import de.minestar.Webpanel.template.TemplateHandler;
 import de.minestar.Webpanel.template.TemplateReplacement;
+import de.minestar.minestarlibrary.utils.PlayerUtils;
 
 public class KickPageHandler extends CustomPageHandler {
 
@@ -48,18 +50,35 @@ public class KickPageHandler extends CustomPageHandler {
         if (userName != null) {
             Server server = Bukkit.getServer();
             if (server != null) {
-                this.template = TemplateHandler.getTemplate("action_success");
-                this.rpl_topic.setValue("Spieler gekickt!");
-                this.rpl_message.setValue("Spieler '" + userName + "' wurde gekickt!");
+
+                Player player = PlayerUtils.getOnlinePlayer(userName);
+                if (player != null) {
+                    // kick player
+                    String reason = params.get("reason");
+                    if (reason == null) {
+                        server.dispatchCommand(server.getConsoleSender(), "kick " + player.getName());
+                    } else {
+                        server.dispatchCommand(server.getConsoleSender(), "kick " + player.getName() + " " + reason);
+                    }
+
+                    // set info
+                    this.template = TemplateHandler.getTemplate("action_success");
+                    this.rpl_topic.setValue("Spieler gekickt!");
+                    this.rpl_message.setValue("Spieler '" + userName + "' wurde gekickt.");
+                } else {
+                    this.template = TemplateHandler.getTemplate("action_error");
+                    this.rpl_topic.setValue("Spieler nicht online!");
+                    this.rpl_message.setValue("'" + userName + "' konnte nicht gekickt werden, weil er nicht online ist.");
+                }
             } else {
                 this.template = TemplateHandler.getTemplate("action_error");
                 this.rpl_topic.setValue("Server nicht gefunden!");
-                this.rpl_message.setValue("Spieler '" + userName + "' konnte nicht gekickt werden!");
+                this.rpl_message.setValue("Spieler '" + userName + "' konnte nicht gekickt werden.");
             }
         } else {
             this.template = TemplateHandler.getTemplate("action_error");
             this.rpl_topic.setValue("Kein Spieler angegeben!");
-            this.rpl_message.setValue("Sie müssen einen Spielernamen angeben!");
+            this.rpl_message.setValue("Du musst einen Spielernamen angeben.");
         }
 
         return this.template.compile(this.rpl_user, this.rpl_token, this.rpl_topic, this.rpl_message);

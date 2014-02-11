@@ -27,6 +27,7 @@ import java.util.Map;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
+import de.minestar.Webpanel.core.Webpanel;
 import de.minestar.Webpanel.exceptions.LoginInvalidException;
 import de.minestar.Webpanel.units.AuthHandler;
 import de.minestar.Webpanel.units.HandlerList;
@@ -100,7 +101,7 @@ public class PageHandler implements HttpHandler {
                 if (fileName.startsWith("/")) {
                     fileName = fileName.replaceFirst("/", "");
                 }
-                File file = new File("web/" + fileName);
+                File file = new File(Webpanel.INSTANCE.getFolder() + "web/" + fileName);
                 // if the file exists, just write it...
                 if (file.exists() && file.isFile()) {
                     // handle incorrect path...

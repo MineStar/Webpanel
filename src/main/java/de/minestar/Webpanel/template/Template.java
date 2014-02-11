@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 
+import de.minestar.Webpanel.core.Webpanel;
+
 public class Template {
     protected final String name;
     protected final String string;
@@ -74,15 +76,15 @@ public class Template {
         if (templateFile.startsWith("/")) {
             templateFile = templateFile.replaceFirst("/", "");
         }
-        File file = new File("templates/" + templateFile);
-
+        File file = new File(Webpanel.INSTANCE.getFolder() + "templates/" + templateFile);
         if (!file.exists()) {
-            return "<b>TEMPLATE '" + templateFile + "' NOT FOUND!</b>";
+            System.out.println("[ WARNING ] Template '" + Webpanel.INSTANCE.getFolder() + templateFile + "' not found!");
+            return "<b>TEMPLATE '" + Webpanel.INSTANCE.getFolder() + templateFile + "' NOT FOUND!</b>";
         }
         try {
             return com.google.common.io.Files.toString(file, Charset.forName("ISO-8859-1"));
         } catch (IOException e) {
-            return "<b>TEMPLATE '" + templateFile + "' NOT LOADED!</b><br/><br/>Error:<br/>" + e.getMessage();
+            return "<b>TEMPLATE '" + Webpanel.INSTANCE.getFolder() + templateFile + "' NOT LOADED!</b><br/><br/>Error:<br/>" + e.getMessage();
         }
     }
 
@@ -93,5 +95,4 @@ public class Template {
     public String getString() {
         return string;
     }
-
 }

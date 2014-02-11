@@ -18,7 +18,6 @@
 
 package de.minestar.Webpanel.core;
 
-import java.io.IOException;
 import java.net.InetSocketAddress;
 
 import com.sun.net.httpserver.HttpServer;
@@ -33,10 +32,15 @@ import de.minestar.Webpanel.utils.ParameterFilter;
 
 public class Webpanel {
 
+    public static Webpanel INSTANCE;
+
+    private final String folder;
     private HttpServer server;
 
-    public Webpanel(int port) throws IOException {
+    public Webpanel(String folder, int port) throws Exception {
         try {
+            Webpanel.INSTANCE = this;
+            this.folder = folder;
             System.out.println("Starting webserver @ port: " + port);
 
             this.server = HttpServer.create(new InetSocketAddress(port), 0);
@@ -59,6 +63,7 @@ public class Webpanel {
             System.out.println("ERROR: could not start server @ port: " + port);
             e.printStackTrace();
             this.server = null;
+            throw e;
         }
     }
 
@@ -77,17 +82,21 @@ public class Webpanel {
         return this.server != null;
     }
 
-    public void close() {
-        if (this.server != null) {
+    public void stop() {
+        if (this.isRunning()) {
             this.server.stop(0);
         }
     }
 
     public static void main(String[] args) {
         try {
-            new Webpanel(8000);
-        } catch (IOException e) {
+            new Webpanel("", 8000);
+        } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public String getFolder() {
+        return folder;
     }
 }
