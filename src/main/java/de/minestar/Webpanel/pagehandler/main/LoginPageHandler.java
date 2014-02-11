@@ -23,22 +23,19 @@ import com.sun.net.httpserver.HttpExchange;
 import de.minestar.Webpanel.pagehandler.AbstractHTMLHandler;
 import de.minestar.Webpanel.template.Template;
 import de.minestar.Webpanel.template.TemplateHandler;
-import de.minestar.Webpanel.template.TemplateReplacement;
 
 public class LoginPageHandler extends AbstractHTMLHandler {
 
-    private Template template;
-    private TemplateReplacement rpl_navigation;
+	private Template template;
 
-    public LoginPageHandler() {
-        super(false);
-        this.template = TemplateHandler.getTemplate("login");
-        this.rpl_navigation = new TemplateReplacement("NAVIGATION", TemplateHandler.getTemplate("tpl_navi_off").getString());
-    }
+	public LoginPageHandler() {
+		super(false);
+		this.template = TemplateHandler.getTemplate("login");
+	}
 
-    @Override
-    public String handle(HttpExchange http) {
-        return this.template.autoReplace(this.rpl_navigation);
-    }
+	@Override
+	public String handle(HttpExchange http) {
+		return this.template.compile();
+	}
 
 }

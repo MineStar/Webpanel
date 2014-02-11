@@ -25,13 +25,13 @@ import de.minestar.Webpanel.template.TemplateHandler;
 
 public class ChatPageHandler extends CustomPageHandler {
 
-    public ChatPageHandler() {
-        super(true, TemplateHandler.getTemplate("chat"));
-    }
+	public ChatPageHandler() {
+		super(true, TemplateHandler.getTemplate("chat"));
+	}
 
-    @Override
-    public String handle(HttpExchange http) throws LoginInvalidException {
-        super.updateReplacements(http);
-        return this.template.autoReplace(this.rpl_navigation, this.rpl_user, this.rpl_token);
-    }
+	@Override
+	public String handle(HttpExchange http) throws LoginInvalidException {
+		super.updateReplacements(http);
+		return this.template.autoReplace(this.rpl_user, this.rpl_token);
+	}
 }

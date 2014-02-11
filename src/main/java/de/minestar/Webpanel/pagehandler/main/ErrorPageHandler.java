@@ -28,29 +28,34 @@ import de.minestar.Webpanel.units.UserData;
 
 public class ErrorPageHandler extends CustomPageHandler {
 
-    public ErrorPageHandler() {
-        super(false, TemplateHandler.getTemplate("error404"));
-    }
+	public ErrorPageHandler() {
+		super(false, TemplateHandler.getTemplate("error404"));
+	}
 
-    @SuppressWarnings("unchecked")
-    @Override
-    public String handle(HttpExchange http) {
-        Map<String, String> params = (Map<String, String>) http.getAttribute("parameters");
-        String userName = params.get("username");
-        String token = params.get("token");
+	@SuppressWarnings("unchecked")
+	@Override
+	public String handle(HttpExchange http) {
+		Map<String, String> params = (Map<String, String>) http
+				.getAttribute("parameters");
+		String userName = params.get("username");
+		String token = params.get("token");
 
-        if (userName != null && token != null && AuthHandler.isUserLoginValid(userName, token)) {
-            // get userdata
-            UserData user = AuthHandler.getUser(userName);
+		if (userName != null && token != null
+				&& AuthHandler.isUserLoginValid(userName, token)) {
+			// get userdata
+			UserData user = AuthHandler.getUser(userName);
 
-            // update replacements...
-            this.rpl_user.setValue(userName);
-            this.rpl_token.setValue(user.getToken());
-            this.rpl_navigation.setValue(TemplateHandler.getTemplate("tpl_navi_on").getString());
-        } else {
-            this.rpl_navigation.setValue(TemplateHandler.getTemplate("tpl_navi_off").getString());
-        }
-        return this.template.autoReplace(this.rpl_navigation, this.rpl_user, this.rpl_token);
+			// update replacements...
+			this.rpl_user.setValue(userName);
+			this.rpl_token.setValue(user.getToken());
+			this.rpl_navigation.setValue(TemplateHandler.getTemplate(
+					"tpl_navi_on").getString());
+		} else {
+			this.rpl_navigation.setValue(TemplateHandler.getTemplate(
+					"tpl_navi_off").getString());
+		}
+		return this.template.autoReplace(this.rpl_navigation, this.rpl_user,
+				this.rpl_token);
 
-    }
+	}
 }

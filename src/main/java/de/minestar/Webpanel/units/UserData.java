@@ -21,44 +21,45 @@ package de.minestar.Webpanel.units;
 import java.util.UUID;
 
 public class UserData {
-    private final String userName;
-    private String token;
-    private final int hashCode;
-    private long lastUsed;
+	private final String userName;
+	private String token;
+	private final int hashCode;
+	private long lastUsed;
 
-    // 1000 * minutes * seconds
-    private final long timeoutInMS = 1000 * 60 * 5;
+	// 1000 * minutes * seconds
+	private final long timeoutInMS = 1000 * 60 * 5;
 
-    public UserData(String userName) {
-        this.userName = userName;
-        this.hashCode = this.userName.hashCode();
-        this.updateToken();
-    }
+	public UserData(String userName) {
+		this.userName = userName;
+		this.hashCode = this.userName.hashCode();
+		this.updateToken();
+	}
 
-    public void updateToken() {
-        this.token = UUID.randomUUID().toString();
-        this.lastUsed = System.currentTimeMillis();
-    }
+	public void updateToken() {
+		this.token = UUID.randomUUID().toString();
+		this.lastUsed = System.currentTimeMillis();
+	}
 
-    public String getToken() {
-        return token;
-    }
+	public String getToken() {
+		return token;
+	}
 
-    public boolean isValid(String token) {
-        return this.token.equals(token) && System.currentTimeMillis() < this.lastUsed + timeoutInMS;
-    }
+	public boolean isValid(String token) {
+		return this.token.equals(token)
+				&& System.currentTimeMillis() < this.lastUsed + timeoutInMS;
+	}
 
-    public void refreshToken() {
-        this.lastUsed = System.currentTimeMillis();
-    }
+	public void refreshToken() {
+		this.lastUsed = System.currentTimeMillis();
+	}
 
-    @Override
-    public int hashCode() {
-        return this.hashCode;
-    }
+	@Override
+	public int hashCode() {
+		return this.hashCode;
+	}
 
-    public void invalidateToken() {
-        this.lastUsed = 0;
-        this.token = "";
-    }
+	public void invalidateToken() {
+		this.lastUsed = 0;
+		this.token = "";
+	}
 }

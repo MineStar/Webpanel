@@ -23,17 +23,17 @@ import java.util.HashMap;
 import de.minestar.Webpanel.pagehandler.AbstractHTMLHandler;
 
 public class HandlerList {
-    private static HashMap<String, AbstractHTMLHandler> registeredHandlers = new HashMap<String, AbstractHTMLHandler>();
+	private static HashMap<String, AbstractHTMLHandler> registeredHandlers = new HashMap<String, AbstractHTMLHandler>();
 
-    public static void registerHandler(String path, AbstractHTMLHandler handler) {
-        registeredHandlers.put(path, handler);
-    }
+	public static void registerHandler(String path, AbstractHTMLHandler handler) {
+		registeredHandlers.put(path, handler);
+	}
 
-    public static AbstractHTMLHandler getHandler(String path) {
-        return registeredHandlers.get(path);
-    }
+	public static AbstractHTMLHandler getHandler(String path) {
+		return registeredHandlers.get(path);
+	}
 
-    public static boolean hasHandler(String path) {
-        return registeredHandlers.containsKey(path);
-    }
+	public static boolean hasHandler(String path) {
+		return registeredHandlers.containsKey(path);
+	}
 }

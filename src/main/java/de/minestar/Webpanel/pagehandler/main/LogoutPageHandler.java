@@ -22,19 +22,18 @@ import com.sun.net.httpserver.HttpExchange;
 
 import de.minestar.Webpanel.exceptions.LoginInvalidException;
 import de.minestar.Webpanel.template.TemplateHandler;
-import de.minestar.Webpanel.template.TemplateReplacement;
 import de.minestar.Webpanel.units.AuthHandler;
 
 public class LogoutPageHandler extends CustomPageHandler {
 
-    public LogoutPageHandler() {
-        super(true, TemplateHandler.getTemplate("logout"));
-    }
+	public LogoutPageHandler() {
+		super(true, TemplateHandler.getTemplate("logout"));
+	}
 
-    @Override
-    public String handle(HttpExchange http) throws LoginInvalidException {
-        super.updateReplacements(http);
-        AuthHandler.logoutUser(this.rpl_user.getValue());
-        return this.template.autoReplace(new TemplateReplacement("NAVIGATION", TemplateHandler.getTemplate("tpl_navi_off").getString()), this.rpl_user, this.rpl_token);
-    }
+	@Override
+	public String handle(HttpExchange http) throws LoginInvalidException {
+		super.updateReplacements(http);
+		AuthHandler.logoutUser(this.rpl_user.getValue());
+		return this.template.compile();
+	}
 }

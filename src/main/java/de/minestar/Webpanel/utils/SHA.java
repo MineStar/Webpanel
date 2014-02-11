@@ -23,22 +23,22 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Formatter;
 
 public class SHA {
-    public static String getHash(String text) throws NoSuchAlgorithmException {
-        return getHash(text.getBytes());
-    }
+	public static String getHash(String text) throws NoSuchAlgorithmException {
+		return getHash(text.getBytes());
+	}
 
-    public static String getHash(byte[] hash) throws NoSuchAlgorithmException {
-        MessageDigest md = MessageDigest.getInstance("SHA-1");
-        return byteArray2Hex(md.digest(hash));
-    }
+	public static String getHash(byte[] hash) throws NoSuchAlgorithmException {
+		MessageDigest md = MessageDigest.getInstance("SHA-1");
+		return byteArray2Hex(md.digest(hash));
+	}
 
-    private static String byteArray2Hex(final byte[] hash) {
-        Formatter formatter = new Formatter();
-        for (byte b : hash) {
-            formatter.format("%02x", b);
-        }
-        String format = formatter.toString();
-        formatter.close();
-        return format;
-    }
+	private static String byteArray2Hex(final byte[] hash) {
+		Formatter formatter = new Formatter();
+		for (byte b : hash) {
+			formatter.format("%02x", b);
+		}
+		String format = formatter.toString();
+		formatter.close();
+		return format;
+	}
 }
