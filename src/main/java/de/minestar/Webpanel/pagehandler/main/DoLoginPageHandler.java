@@ -60,7 +60,7 @@ public class DoLoginPageHandler extends AbstractHTMLHandler {
 			this.rpl_token.setValue(user.getToken());
 
 			// autoreplace...
-			return this.template.autoReplace(this.rpl_user, this.rpl_token);
+			return this.template.compile(this.rpl_user, this.rpl_token);
 		} else {
 			throw new LoginInvalidException();
 		}

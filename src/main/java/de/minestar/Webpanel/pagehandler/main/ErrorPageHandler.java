@@ -54,7 +54,7 @@ public class ErrorPageHandler extends CustomPageHandler {
 			this.rpl_navigation.setValue(TemplateHandler.getTemplate(
 					"tpl_navi_off").getString());
 		}
-		return this.template.autoReplace(this.rpl_navigation, this.rpl_user,
+		return this.template.compile(this.rpl_navigation, this.rpl_user,
 				this.rpl_token);
 
 	}

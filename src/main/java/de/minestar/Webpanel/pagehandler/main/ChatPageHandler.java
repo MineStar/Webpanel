@@ -32,6 +32,6 @@ public class ChatPageHandler extends CustomPageHandler {
 	@Override
 	public String handle(HttpExchange http) throws LoginInvalidException {
 		super.updateReplacements(http);
-		return this.template.autoReplace(this.rpl_user, this.rpl_token);
+		return this.template.compile(this.rpl_user, this.rpl_token);
 	}
 }
