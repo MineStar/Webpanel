@@ -23,20 +23,12 @@ import java.net.InetSocketAddress;
 
 import com.sun.net.httpserver.HttpServer;
 
-import de.minestar.Webpanel.pagehandler.AbstractHTMLHandler;
 import de.minestar.Webpanel.pagehandler.PageHandler;
-import de.minestar.Webpanel.pagehandler.AdminStuff.AdminStuffPageHandler;
-import de.minestar.Webpanel.pagehandler.AdminStuff.KickPageHandler;
-import de.minestar.Webpanel.pagehandler.main.ChatPageHandler;
-import de.minestar.Webpanel.pagehandler.main.DoLoginPageHandler;
-import de.minestar.Webpanel.pagehandler.main.ErrorPageHandler;
-import de.minestar.Webpanel.pagehandler.main.InvalidLoginPageHandler;
-import de.minestar.Webpanel.pagehandler.main.LoginPageHandler;
-import de.minestar.Webpanel.pagehandler.main.LogoutPageHandler;
-import de.minestar.Webpanel.template.Template;
-import de.minestar.Webpanel.template.TemplateHandler;
+import de.minestar.Webpanel.services.AdminStuffService;
+import de.minestar.Webpanel.services.MainPageService;
+import de.minestar.Webpanel.services.ServerService;
+import de.minestar.Webpanel.services.TemplateService;
 import de.minestar.Webpanel.units.AuthHandler;
-import de.minestar.Webpanel.units.HandlerList;
 import de.minestar.Webpanel.utils.ParameterFilter;
 
 public class Webpanel {
@@ -71,48 +63,10 @@ public class Webpanel {
     }
 
     private void startUp() {
-        // register navigations
-        this.registerTemplate("tpl_navi_on", "/main/tpl_navi_on.html");
-        this.registerTemplate("tpl_navi_off", "/main/tpl_navi_off.html");
-
-        // register main-templates
-        this.registerTemplate("error404", "/main/error404.html");
-        this.registerTemplate("login", "/main/login.html");
-        this.registerTemplate("logout", "/main/logout.html");
-        this.registerTemplate("doLogin", "/main/doLogin.html");
-        this.registerTemplate("invalidLogin", "/main/invalidLogin.html");
-
-        // register action-templates
-        this.registerTemplate("action_success", "/Actions/success.html");
-        this.registerTemplate("action_error", "/Actions/error.html");
-
-        // register server-templates
-        this.registerTemplate("chat", "/server/chat.html");
-
-        // register AdminStuff-Templates
-        this.registerTemplate("AdminStuff", "/AdminStuff/plugin.html");
-
-        // register main-pages
-        this.registerPage(new ErrorPageHandler(), "/error404.html");
-        this.registerPage(new InvalidLoginPageHandler(), "/invalidLogin.html");
-        this.registerPage(new LoginPageHandler(), "/login.html");
-        this.registerPage(new LogoutPageHandler(), "/logout.html");
-        this.registerPage(new DoLoginPageHandler(), "/doLogin.html");
-
-        // register AdminStuff-Pages
-        this.registerPage(new AdminStuffPageHandler(), "/AdminStuff.html");
-        this.registerPage(new KickPageHandler(), "/AS_kickPlayer.html");
-
-        // register server-pages
-        this.registerPage(new ChatPageHandler(), "/chat.html");
-    }
-
-    private void registerTemplate(String name, String path) {
-        TemplateHandler.addTemplate(new Template(name, path));
-    }
-
-    public void registerPage(AbstractHTMLHandler handler, String path) {
-        HandlerList.registerHandler(path, handler);
+        new TemplateService();
+        new MainPageService();
+        new ServerService();
+        new AdminStuffService();
     }
 
     public HttpServer getServer() {
