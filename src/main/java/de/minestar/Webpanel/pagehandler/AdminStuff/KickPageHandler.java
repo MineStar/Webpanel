@@ -26,6 +26,7 @@ import org.bukkit.entity.Player;
 
 import com.sun.net.httpserver.HttpExchange;
 
+import de.minestar.Webpanel.core.CommandQueue;
 import de.minestar.Webpanel.exceptions.LoginInvalidException;
 import de.minestar.Webpanel.pagehandler.main.CustomPageHandler;
 import de.minestar.Webpanel.template.TemplateHandler;
@@ -56,9 +57,9 @@ public class KickPageHandler extends CustomPageHandler {
                     // kick player
                     String reason = params.get("reason");
                     if (reason == null) {
-                        server.dispatchCommand(server.getConsoleSender(), "kick " + player.getName());
+                        CommandQueue.queue("kick " + player.getName());
                     } else {
-                        server.dispatchCommand(server.getConsoleSender(), "kick " + player.getName() + " " + reason);
+                        CommandQueue.queue("kick " + player.getName() + " " + reason);
                     }
 
                     // set info
