@@ -19,6 +19,7 @@
 package de.minestar.Webpanel.pagehandler;
 
 import java.io.IOException;
+import java.util.Map;
 
 import com.sun.net.httpserver.HttpExchange;
 
@@ -26,16 +27,15 @@ import de.minestar.Webpanel.exceptions.LoginInvalidException;
 
 public abstract class AbstractHTMLHandler {
 
-	private final boolean needsLogin;
+    private final boolean needsLogin;
 
-	protected AbstractHTMLHandler(boolean needsLogin) {
-		this.needsLogin = needsLogin;
-	}
+    protected AbstractHTMLHandler(boolean needsLogin) {
+        this.needsLogin = needsLogin;
+    }
 
-	public boolean needsLogin() {
-		return this.needsLogin;
-	}
+    public boolean needsLogin() {
+        return this.needsLogin;
+    }
 
-	public abstract String handle(HttpExchange http) throws IOException,
-			LoginInvalidException;
+    public abstract String handle(HttpExchange http, Map<String, String> params) throws IOException, LoginInvalidException;
 }

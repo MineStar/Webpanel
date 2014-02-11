@@ -18,6 +18,8 @@
 
 package de.minestar.Webpanel.pagehandler.main;
 
+import java.util.Map;
+
 import com.sun.net.httpserver.HttpExchange;
 
 import de.minestar.Webpanel.exceptions.LoginInvalidException;
@@ -26,14 +28,14 @@ import de.minestar.Webpanel.units.AuthHandler;
 
 public class LogoutPageHandler extends CustomPageHandler {
 
-	public LogoutPageHandler() {
-		super(true, TemplateHandler.getTemplate("logout"));
-	}
+    public LogoutPageHandler() {
+        super(true, TemplateHandler.getTemplate("logout"));
+    }
 
-	@Override
-	public String handle(HttpExchange http) throws LoginInvalidException {
-		super.updateReplacements(http);
-		AuthHandler.logoutUser(this.rpl_user.getValue());
-		return this.template.compile();
-	}
+    @Override
+    public String handle(HttpExchange http, Map<String, String> params) throws LoginInvalidException {
+        super.updateReplacements(http);
+        AuthHandler.logoutUser(this.rpl_user.getValue());
+        return this.template.compile();
+    }
 }

@@ -18,6 +18,8 @@
 
 package de.minestar.Webpanel.pagehandler.main;
 
+import java.util.Map;
+
 import com.sun.net.httpserver.HttpExchange;
 
 import de.minestar.Webpanel.pagehandler.AbstractHTMLHandler;
@@ -26,15 +28,15 @@ import de.minestar.Webpanel.template.TemplateHandler;
 
 public class InvalidLoginPageHandler extends AbstractHTMLHandler {
 
-	private Template template;
+    private Template template;
 
-	public InvalidLoginPageHandler() {
-		super(false);
-		this.template = TemplateHandler.getTemplate("invalidLogin");
-	}
+    public InvalidLoginPageHandler() {
+        super(false);
+        this.template = TemplateHandler.getTemplate("invalidLogin");
+    }
 
-	@Override
-	public String handle(HttpExchange http) {
-		return this.template.compile();
-	}
+    @Override
+    public String handle(HttpExchange http, Map<String, String> params) {
+        return this.template.compile();
+    }
 }

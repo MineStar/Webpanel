@@ -32,37 +32,33 @@ import de.minestar.Webpanel.units.UserData;
 
 public class DoLoginPageHandler extends AbstractHTMLHandler {
 
-	private Template template;
-	private TemplateReplacement rpl_user, rpl_token;
+    private Template template;
+    private TemplateReplacement rpl_user, rpl_token;
 
-	public DoLoginPageHandler() {
-		super(false);
-		this.template = TemplateHandler.getTemplate("doLogin");
-		this.rpl_user = new TemplateReplacement("USERNAME");
-		this.rpl_token = new TemplateReplacement("TOKEN");
-	}
+    public DoLoginPageHandler() {
+        super(false);
+        this.template = TemplateHandler.getTemplate("doLogin");
+        this.rpl_user = new TemplateReplacement("USERNAME");
+        this.rpl_token = new TemplateReplacement("TOKEN");
+    }
 
-	@Override
-	@SuppressWarnings("unchecked")
-	public String handle(HttpExchange http) throws LoginInvalidException {
-		Map<String, String> params = (Map<String, String>) http
-				.getAttribute("parameters");
-		String userName = params.get("txt_username");
-		String clearPassword = params.get("txt_password");
+    @Override
+    public String handle(HttpExchange http, Map<String, String> params) throws LoginInvalidException {
+        String userName = params.get("txt_username");
+        String clearPassword = params.get("txt_password");
 
-		if (userName != null && clearPassword != null
-				&& AuthHandler.doLogin(userName, clearPassword)) {
-			// get userdata
-			UserData user = AuthHandler.getUser(userName);
+        if (userName != null && clearPassword != null && AuthHandler.doLogin(userName, clearPassword)) {
+            // get userdata
+            UserData user = AuthHandler.getUser(userName);
 
-			// update replacements...
-			this.rpl_user.setValue(userName);
-			this.rpl_token.setValue(user.getToken());
+            // update replacements...
+            this.rpl_user.setValue(userName);
+            this.rpl_token.setValue(user.getToken());
 
-			// autoreplace...
-			return this.template.compile(this.rpl_user, this.rpl_token);
-		} else {
-			throw new LoginInvalidException();
-		}
-	}
+            // autoreplace...
+            return this.template.compile(this.rpl_user, this.rpl_token);
+        } else {
+            throw new LoginInvalidException();
+        }
+    }
 }

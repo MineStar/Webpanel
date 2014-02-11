@@ -23,27 +23,24 @@ import java.security.NoSuchAlgorithmException;
 import de.minestar.Webpanel.utils.SHA;
 
 public class AdminData {
-	private final String userName;
-	private final String passwordSalt;
-	private final String saltedPassword;
-	private final int hashCode;
+    private final String userName;
+    private final String passwordSalt;
+    private final String saltedPassword;
+    private final int hashCode;
 
-	public AdminData(String userName, String hashedPassword, String passwordSalt)
-			throws NoSuchAlgorithmException {
-		this.userName = userName;
-		this.passwordSalt = passwordSalt;
-		this.saltedPassword = SHA.getHash(hashedPassword + this.passwordSalt);
-		this.hashCode = (this.userName + ":" + this.saltedPassword).hashCode();
-	}
+    public AdminData(String userName, String hashedPassword, String passwordSalt) throws NoSuchAlgorithmException {
+        this.userName = userName;
+        this.passwordSalt = passwordSalt;
+        this.saltedPassword = SHA.getHash(hashedPassword + this.passwordSalt);
+        this.hashCode = (this.userName + ":" + this.saltedPassword).hashCode();
+    }
 
-	public boolean isPasswordCorrect(String hashedPassword)
-			throws NoSuchAlgorithmException {
-		return this.saltedPassword.equals(SHA.getHash(hashedPassword
-				+ this.passwordSalt));
-	}
+    public boolean isPasswordCorrect(String hashedPassword) throws NoSuchAlgorithmException {
+        return this.saltedPassword.equals(SHA.getHash(hashedPassword + this.passwordSalt));
+    }
 
-	@Override
-	public int hashCode() {
-		return this.hashCode;
-	}
+    @Override
+    public int hashCode() {
+        return this.hashCode;
+    }
 }

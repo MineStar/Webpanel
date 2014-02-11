@@ -18,6 +18,8 @@
 
 package de.minestar.Webpanel.pagehandler.AdminStuff;
 
+import java.util.Map;
+
 import com.sun.net.httpserver.HttpExchange;
 
 import de.minestar.Webpanel.exceptions.LoginInvalidException;
@@ -26,13 +28,13 @@ import de.minestar.Webpanel.template.TemplateHandler;
 
 public class AdminStuffPageHandler extends CustomPageHandler {
 
-	public AdminStuffPageHandler() {
-		super(true, TemplateHandler.getTemplate("AdminStuff"));
-	}
+    public AdminStuffPageHandler() {
+        super(true, TemplateHandler.getTemplate("AdminStuff"));
+    }
 
-	@Override
-	public String handle(HttpExchange http) throws LoginInvalidException {
-		super.updateReplacements(http);
-		return this.template.compile(this.rpl_user, this.rpl_token);
-	}
+    @Override
+    public String handle(HttpExchange http, Map<String, String> params) throws LoginInvalidException {
+        super.updateReplacements(http);
+        return this.template.compile(this.rpl_user, this.rpl_token);
+    }
 }
