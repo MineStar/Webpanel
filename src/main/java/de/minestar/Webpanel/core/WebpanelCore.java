@@ -16,7 +16,7 @@ public class WebpanelCore extends AbstractCore {
     protected boolean commonEnable() {
         try {
             this.webpanel = new Webpanel("plugins/Webpanel/", 8000);
-            Bukkit.getServer().getScheduler().runTaskTimer(this, new CommandQueue(), 5, 5);
+            Bukkit.getServer().getScheduler().runTaskTimer(this, new CommandQueue(), 20, 2);
             return true;
         } catch (Exception e) {
             this.webpanel = null;

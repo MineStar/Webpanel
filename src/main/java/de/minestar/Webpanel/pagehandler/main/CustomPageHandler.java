@@ -17,6 +17,10 @@ public abstract class CustomPageHandler extends AbstractHTMLHandler {
     protected Template template;
     protected final TemplateReplacement rpl_navigation, rpl_user, rpl_token;
 
+    protected CustomPageHandler(boolean needsLogin) {
+        this(needsLogin, Template.emptyTemplate());
+    }
+
     protected CustomPageHandler(boolean needsLogin, Template template) {
         super(needsLogin);
 

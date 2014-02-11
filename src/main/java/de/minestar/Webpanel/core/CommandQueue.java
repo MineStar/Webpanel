@@ -14,6 +14,10 @@ public class CommandQueue implements Runnable {
     }
 
     public void run() {
+        if (queuedCommands.isEmpty()) {
+            return;
+        }
+
         for (String command : queuedCommands) {
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command);
         }

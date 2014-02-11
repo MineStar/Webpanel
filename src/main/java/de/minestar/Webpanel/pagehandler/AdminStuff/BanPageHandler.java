@@ -20,8 +20,6 @@ package de.minestar.Webpanel.pagehandler.AdminStuff;
 
 import java.util.Map;
 
-import org.bukkit.entity.Player;
-
 import com.sun.net.httpserver.HttpExchange;
 
 import de.minestar.Webpanel.core.CommandQueue;
@@ -29,13 +27,12 @@ import de.minestar.Webpanel.exceptions.LoginInvalidException;
 import de.minestar.Webpanel.pagehandler.main.CustomPageHandler;
 import de.minestar.Webpanel.template.TemplateHandler;
 import de.minestar.Webpanel.template.TemplateReplacement;
-import de.minestar.minestarlibrary.utils.PlayerUtils;
 
-public class KickPageHandler extends CustomPageHandler {
+public class BanPageHandler extends CustomPageHandler {
 
     private final TemplateReplacement rpl_topic, rpl_message;
 
-    public KickPageHandler() {
+    public BanPageHandler() {
         super(true, TemplateHandler.getTemplate("action_normal"));
         this.rpl_topic = new TemplateReplacement("TOPIC");
         this.rpl_message = new TemplateReplacement("MESSAGE");
@@ -47,31 +44,22 @@ public class KickPageHandler extends CustomPageHandler {
 
         String playerName = params.get("player");
         if (playerName != null) {
-            Player player = PlayerUtils.getOnlinePlayer(playerName);
-            if (player != null) {
-                // kick player
-                String reason = params.get("reason");
-                if (reason != null) {
-                    reason = reason.replace(" ", "").trim();
-                }
-                if (reason == null || reason.length() < 1) {
-                    CommandQueue.queue("kick " + player.getName());
-                } else {
-                    CommandQueue.queue("kick " + player.getName() + " " + reason);
-                }
-
+            playerName = playerName.replace(" ", "").trim();
+            // kick player
+            String reason = params.get("reason");
+            if (reason != null) {
+                reason = reason.replace(" ", "").trim();
+            }
+            if (reason == null || reason.length() < 1) {
+                this.template = TemplateHandler.getTemplate("action_error");
+                this.rpl_topic.setValue("Kein Grund angegeben!");
+                this.rpl_message.setValue("Du musst einen Grund angeben.");
+            } else {
+                CommandQueue.queue("ban " + playerName + " " + reason);
                 // set info
                 this.template = TemplateHandler.getTemplate("action_success");
-                this.rpl_topic.setValue("Spieler gekickt!");
-                if (reason == null || reason.length() < 1) {
-                    this.rpl_message.setValue("Spieler '" + playerName + "' wurde gekickt.");
-                } else {
-                    this.rpl_message.setValue("Spieler '" + playerName + "' wurde gekickt (Grund: '" + reason + "').");
-                }
-            } else {
-                this.template = TemplateHandler.getTemplate("action_error");
-                this.rpl_topic.setValue("Spieler nicht online!");
-                this.rpl_message.setValue("'" + playerName + "' konnte nicht gekickt werden, weil er nicht online ist.");
+                this.rpl_topic.setValue("Spieler gebannt!");
+                this.rpl_message.setValue("Spieler '" + playerName + "' wurde gebannt (Grund: '" + reason + "').");
             }
         } else {
             this.template = TemplateHandler.getTemplate("action_error");

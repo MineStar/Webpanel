@@ -16,7 +16,7 @@
  * along with AdminStuff.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.minestar.Webpanel.pagehandler.AdminStuff;
+package de.minestar.Webpanel.pagehandler.main;
 
 import java.util.Map;
 
@@ -26,25 +26,18 @@ import org.bukkit.entity.Player;
 import com.sun.net.httpserver.HttpExchange;
 
 import de.minestar.Webpanel.exceptions.LoginInvalidException;
-import de.minestar.Webpanel.pagehandler.main.CustomPageHandler;
-import de.minestar.Webpanel.template.TemplateHandler;
-import de.minestar.Webpanel.template.TemplateReplacement;
 import de.minestar.Webpanel.utils.Helper;
 
-public class AdminStuffPageHandler extends CustomPageHandler {
+public class GetOnlinePlayersPageHandler extends CustomPageHandler {
 
-    private TemplateReplacement rpl_playerList;
-
-    public AdminStuffPageHandler() {
-        super(true, TemplateHandler.getTemplate("AdminStuff"));
-        this.rpl_playerList = new TemplateReplacement("PLAYERLIST");
+    public GetOnlinePlayersPageHandler() {
+        super(true);
     }
 
     @Override
     public String handle(HttpExchange http, Map<String, String> params) throws LoginInvalidException {
         super.updateReplacements(http);
-        this.rpl_playerList.setValue(Helper.StringToDropDown("player", this.getPlayerList(), ";"));
-        return this.template.compile(this.rpl_playerList, this.rpl_user, this.rpl_token);
+        return Helper.StringToDropDown("player", this.getPlayerList(), ";");
     }
 
     private String getPlayerList() {
