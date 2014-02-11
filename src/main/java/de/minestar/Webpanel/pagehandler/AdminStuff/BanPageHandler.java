@@ -48,7 +48,7 @@ public class BanPageHandler extends CustomPageHandler {
             // kick player
             String reason = params.get("reason");
             if (reason != null) {
-                reason = reason.replace(" ", "").trim();
+                reason = reason.trim();
             }
             if (reason == null || reason.length() < 1) {
                 this.template = TemplateHandler.getTemplate("action_error");

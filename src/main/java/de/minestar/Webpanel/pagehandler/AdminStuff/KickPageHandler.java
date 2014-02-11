@@ -52,7 +52,7 @@ public class KickPageHandler extends CustomPageHandler {
                 // kick player
                 String reason = params.get("reason");
                 if (reason != null) {
-                    reason = reason.replace(" ", "").trim();
+                    reason = reason.trim();
                 }
                 if (reason == null || reason.length() < 1) {
                     CommandQueue.queue("kick " + player.getName());
