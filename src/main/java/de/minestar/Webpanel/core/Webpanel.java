@@ -25,6 +25,7 @@ import com.sun.net.httpserver.HttpServer;
 
 import de.minestar.Webpanel.pagehandler.AbstractHTMLHandler;
 import de.minestar.Webpanel.pagehandler.PageHandler;
+import de.minestar.Webpanel.pagehandler.AdminStuff.AdminStuffPageHandler;
 import de.minestar.Webpanel.pagehandler.main.ChatPageHandler;
 import de.minestar.Webpanel.pagehandler.main.DoLoginPageHandler;
 import de.minestar.Webpanel.pagehandler.main.ErrorPageHandler;
@@ -84,12 +85,18 @@ public class Webpanel {
 		// register server-templates
 		this.registerTemplate("chat", "/server/chat.html");
 
+		// register AdminStuff-Templates
+		this.registerTemplate("AdminStuff", "/AdminStuff/plugin.html");
+
 		// register main-pages
 		this.registerPage(new ErrorPageHandler(), "/error404.html");
 		this.registerPage(new InvalidLoginPageHandler(), "/invalidLogin.html");
 		this.registerPage(new LoginPageHandler(), "/login.html");
 		this.registerPage(new LogoutPageHandler(), "/logout.html");
 		this.registerPage(new DoLoginPageHandler(), "/doLogin.html");
+
+		// register AdminStuff-Pages
+		this.registerPage(new AdminStuffPageHandler(), "/AdminStuff.html");
 
 		// register server-pages
 		this.registerPage(new ChatPageHandler(), "/chat.html");

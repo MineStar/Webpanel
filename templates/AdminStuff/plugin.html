@@ -1,0 +1,63 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="de">
+<head>
+    <link rel="stylesheet" media="all" href="styles.css">
+    <script src="scripts/jquery-2.1.0.js" type="text/javascript"></script>
+    <script>
+        $(document).ready(function(){
+            function hideAll() {            
+                $("#content_kick").hide();  
+                $("#content_ban").hide();
+                $("#content_fish").hide();
+            }
+            
+            $("#topic_kick").click(function(){
+                hideAll();
+                $("#content_kick").show();
+            });
+            
+            $("#topic_ban").click(function(){
+                hideAll();
+                $("#content_ban").show();
+            });
+                        
+            $("#topic_fish").click(function(){
+                hideAll();
+                $("#content_fish").show();
+            });
+        });
+    </script>    
+</head>
+<body>
+    <div id="wrap">
+        <div id="header"></div>
+        <div id="sidebar">
+            {TEMPLATE:tpl_navi_on}
+        </div>
+        <div id="main">
+            <div id="content_spacer"></div>
+            <div id="content_plugin_topic">AdminStuff</div>            
+            <div id="content_spacer"></div>
+            
+            <div class="content_topic_switch" id="topic_kick">/kick</div>
+            <div class="content_frame_switch" id="content_kick">
+            	Kickformular
+            </div>
+            <div id="content_spacer"></div>
+            
+            <div class="content_topic_switch" id="topic_ban">/ban</div>
+            <div class="content_frame_switch" id="content_ban">
+            	Bannformular
+            </div>            
+            <div id="content_spacer"></div>
+            
+            <div class="content_topic_switch" id="topic_fish">/fish</div>
+            <div class="content_frame_switch" id="content_fish">
+            	Fishformular
+            </div>            
+            <div id="content_spacer"></div>
+        </div>
+        <div id="footer"></div>
+    </div>
+</body>
+</html>
