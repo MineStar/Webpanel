@@ -26,17 +26,21 @@ import org.bukkit.entity.Player;
 import com.sun.net.httpserver.HttpExchange;
 
 import de.minestar.Webpanel.exceptions.LoginInvalidException;
+import de.minestar.Webpanel.units.UserData;
 import de.minestar.Webpanel.utils.Helper;
 
 public class GetOnlinePlayersPageHandler extends CustomPageHandler {
 
     public GetOnlinePlayersPageHandler() {
-        super(true);
+        super(true, 0);
     }
 
     @Override
-    public String handle(HttpExchange http, Map<String, String> params) throws LoginInvalidException {
+    public String handle(HttpExchange http, Map<String, String> params, UserData userData) throws LoginInvalidException {
         super.updateReplacements(http);
+        if (Bukkit.getServer() == null) {
+            return "Server ist offline!";
+        }
         return Helper.StringToDropDown("player", this.getPlayerList(), ";", "dropdown_big");
     }
 

@@ -36,14 +36,14 @@ public class DoLoginPageHandler extends AbstractHTMLHandler {
     private TemplateReplacement rpl_user, rpl_token;
 
     public DoLoginPageHandler() {
-        super(false);
+        super(false, -1);
         this.template = TemplateHandler.getTemplate("doLogin");
         this.rpl_user = new TemplateReplacement("USERNAME");
         this.rpl_token = new TemplateReplacement("TOKEN");
     }
 
     @Override
-    public String handle(HttpExchange http, Map<String, String> params) throws LoginInvalidException {
+    public String handle(HttpExchange http, Map<String, String> params, UserData userData) throws LoginInvalidException {
         String userName = params.get("txt_username");
         String clearPassword = params.get("txt_password");
 
@@ -56,7 +56,7 @@ public class DoLoginPageHandler extends AbstractHTMLHandler {
             this.rpl_token.setValue(user.getToken());
 
             // autoreplace...
-            return this.template.compile(this.rpl_user, this.rpl_token);
+            return this.template.compile(AuthHandler.getUser(userName), this.rpl_user, this.rpl_token);
         } else {
             throw new LoginInvalidException();
         }

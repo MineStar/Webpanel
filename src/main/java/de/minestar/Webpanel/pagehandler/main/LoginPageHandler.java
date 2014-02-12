@@ -25,19 +25,20 @@ import com.sun.net.httpserver.HttpExchange;
 import de.minestar.Webpanel.pagehandler.AbstractHTMLHandler;
 import de.minestar.Webpanel.template.Template;
 import de.minestar.Webpanel.template.TemplateHandler;
+import de.minestar.Webpanel.units.UserData;
 
 public class LoginPageHandler extends AbstractHTMLHandler {
 
     private Template template;
 
     public LoginPageHandler() {
-        super(false);
+        super(false, -1);
         this.template = TemplateHandler.getTemplate("login");
     }
 
     @Override
-    public String handle(HttpExchange http, Map<String, String> params) {
-        return this.template.compile();
+    public String handle(HttpExchange http, Map<String, String> params, UserData userData) {
+        return this.template.compile(userData);
     }
 
 }

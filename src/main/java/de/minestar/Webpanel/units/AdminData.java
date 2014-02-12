@@ -27,16 +27,22 @@ public class AdminData {
     private final String passwordSalt;
     private final String saltedPassword;
     private final int hashCode;
+    private final int level;
 
-    public AdminData(String userName, String hashedPassword, String passwordSalt) throws NoSuchAlgorithmException {
+    public AdminData(String userName, String hashedPassword, String passwordSalt, int level) throws NoSuchAlgorithmException {
         this.userName = userName;
         this.passwordSalt = passwordSalt;
         this.saltedPassword = SHA.getHash(hashedPassword + this.passwordSalt);
         this.hashCode = (this.userName + ":" + this.saltedPassword).hashCode();
+        this.level = level;
     }
 
     public boolean isPasswordCorrect(String hashedPassword) throws NoSuchAlgorithmException {
         return this.saltedPassword.equals(SHA.getHash(hashedPassword + this.passwordSalt));
+    }
+
+    public int getLevel() {
+        return level;
     }
 
     @Override

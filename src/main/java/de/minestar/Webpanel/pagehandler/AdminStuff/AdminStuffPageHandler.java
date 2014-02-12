@@ -29,6 +29,7 @@ import de.minestar.Webpanel.exceptions.LoginInvalidException;
 import de.minestar.Webpanel.pagehandler.main.CustomPageHandler;
 import de.minestar.Webpanel.template.TemplateHandler;
 import de.minestar.Webpanel.template.TemplateReplacement;
+import de.minestar.Webpanel.units.UserData;
 import de.minestar.Webpanel.utils.Helper;
 
 public class AdminStuffPageHandler extends CustomPageHandler {
@@ -36,15 +37,19 @@ public class AdminStuffPageHandler extends CustomPageHandler {
     private TemplateReplacement rpl_playerList;
 
     public AdminStuffPageHandler() {
-        super(true, TemplateHandler.getTemplate("AdminStuff"));
+        super(true, 10, TemplateHandler.getTemplate("AdminStuff"));
         this.rpl_playerList = new TemplateReplacement("PLAYERLIST");
     }
 
     @Override
-    public String handle(HttpExchange http, Map<String, String> params) throws LoginInvalidException {
+    public String handle(HttpExchange http, Map<String, String> params, UserData userData) throws LoginInvalidException {
         super.updateReplacements(http);
-        this.rpl_playerList.setValue(Helper.StringToDropDown("player", this.getPlayerList(), ";", "dropdown_big"));
-        return this.template.compile(this.rpl_playerList, this.rpl_user, this.rpl_token);
+        if (Bukkit.getServer() != null) {
+            this.rpl_playerList.setValue(Helper.StringToDropDown("player", this.getPlayerList(), ";", "dropdown_big"));
+        } else {
+            this.rpl_playerList.setValue("Server ist offline!");
+        }
+        return this.template.compile(userData, this.rpl_playerList, this.rpl_user, this.rpl_token);
     }
 
     private String getPlayerList() {

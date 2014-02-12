@@ -24,18 +24,25 @@ import java.util.Map;
 import com.sun.net.httpserver.HttpExchange;
 
 import de.minestar.Webpanel.exceptions.LoginInvalidException;
+import de.minestar.Webpanel.units.UserData;
 
 public abstract class AbstractHTMLHandler {
 
     private final boolean needsLogin;
+    private final int neededLevel;
 
-    protected AbstractHTMLHandler(boolean needsLogin) {
+    protected AbstractHTMLHandler(boolean needsLogin, int neededLevel) {
         this.needsLogin = needsLogin;
+        this.neededLevel = neededLevel;
+    }
+
+    public int getNeededLevel() {
+        return neededLevel;
     }
 
     public boolean needsLogin() {
         return this.needsLogin;
     }
 
-    public abstract String handle(HttpExchange http, Map<String, String> params) throws IOException, LoginInvalidException;
+    public abstract String handle(HttpExchange http, Map<String, String> params, UserData userData) throws IOException, LoginInvalidException;
 }

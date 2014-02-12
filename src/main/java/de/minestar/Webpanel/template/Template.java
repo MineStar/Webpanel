@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 
 import de.minestar.Webpanel.core.Webpanel;
+import de.minestar.Webpanel.units.UserData;
 
 public class Template {
     protected final String name;
@@ -26,19 +27,19 @@ public class Template {
         this.string = this.loadTemplate(templateFile);
     }
 
-    public String compile(TemplateReplacement... args) {
-        String answer = this.compile();
+    public String compile(UserData userData, TemplateReplacement... args) {
+        String answer = this.compile(userData);
         for (TemplateReplacement arg : args) {
             answer = answer.replaceAll(arg.getName(), arg.getValue());
         }
         return answer;
     }
 
-    public String compile() {
-        return compile(this, 0);
+    public String compile(UserData userData) {
+        return compile(this, userData, 0);
     }
 
-    private String compile(Template template, int depth) {
+    private String compile(Template template, UserData userData, int depth) {
         // maximum depth to avoid infinite Template-loops
         if (depth > 10) {
             return template.getString();
@@ -58,16 +59,58 @@ public class Template {
             if (endIndex <= 0) {
                 continue;
             }
+
+            // get minimumUserlevel
             // retrieve the templateName
             String templateName = split[index].substring(0, endIndex);
-            Template inherited = TemplateHandler.getTemplate(templateName);
-            // Template invalid, so ignore it...
-            if (inherited == null) {
-                continue;
+
+            String[] levelSplit = templateName.split(":");
+            int minimumLevel = -1;
+            int switchMode = 0;
+            // {TEMPLATE:templateName[:MODE]} , where MODE is "=", "<", ">"
+            if (levelSplit.length == 2) {
+                try {
+                    templateName = levelSplit[0];
+                    int equalIndexSmaller = levelSplit[1].indexOf("<");
+                    int equalIndexEqual = levelSplit[1].indexOf("=");
+                    int equalIndexLarger = levelSplit[1].indexOf(">");
+                    boolean noSwitch = true;
+                    if (equalIndexSmaller == 0) {
+                        switchMode = 1;
+                        noSwitch = false;
+                    }
+                    if (equalIndexEqual == 0) {
+                        switchMode = 2;
+                        noSwitch = false;
+                    }
+                    if (equalIndexLarger == 0) {
+                        switchMode = 3;
+                        noSwitch = false;
+                    }
+                    if (noSwitch) {
+                        minimumLevel = Integer.valueOf(levelSplit[1]);
+                    } else {
+                        minimumLevel = Integer.valueOf(levelSplit[1].substring(1));
+                    }
+                } catch (Exception e) {
+                    templateName = split[index].substring(0, endIndex);
+                    minimumLevel = -1;
+                }
             }
-            // append texts
-            text += compile(inherited, (depth + 1));
-            text += split[index].substring(endIndex + 1);
+
+            // replace the template, if the level is reached
+            if ((switchMode == 0 && userData.getLevel() >= minimumLevel) || (switchMode == 1 && userData.getLevel() < minimumLevel) || (switchMode == 2 && userData.getLevel() == minimumLevel) || (switchMode == 3 && userData.getLevel() > minimumLevel)) {
+                Template inherited = TemplateHandler.getTemplate(templateName);
+                // Template invalid, so ignore it...
+                if (inherited == null) {
+                    continue;
+                }
+                // append texts
+                text += compile(inherited, userData, (depth + 1));
+                text += split[index].substring(endIndex + 1);
+            } else {
+                text += split[index].substring(endIndex + 1);
+            }
         }
         return text;
     }

@@ -29,11 +29,11 @@ import de.minestar.Webpanel.units.UserData;
 public class ErrorPageHandler extends CustomPageHandler {
 
     public ErrorPageHandler() {
-        super(false, TemplateHandler.getTemplate("error404"));
+        super(false, -1, TemplateHandler.getTemplate("error404"));
     }
 
     @Override
-    public String handle(HttpExchange http, Map<String, String> params) {
+    public String handle(HttpExchange http, Map<String, String> params, UserData userData) {
         String userName = params.get("username");
         String token = params.get("token");
 
@@ -44,11 +44,7 @@ public class ErrorPageHandler extends CustomPageHandler {
             // update replacements...
             this.rpl_user.setValue(userName);
             this.rpl_token.setValue(user.getToken());
-            this.rpl_navigation.setValue(TemplateHandler.getTemplate("tpl_navi_on").getString());
-        } else {
-            this.rpl_navigation.setValue(TemplateHandler.getTemplate("tpl_navi_off").getString());
         }
-        return this.template.compile(this.rpl_navigation, this.rpl_user, this.rpl_token);
-
+        return this.template.compile(userData, this.rpl_user, this.rpl_token);
     }
 }

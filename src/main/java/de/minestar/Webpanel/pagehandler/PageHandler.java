@@ -31,12 +31,14 @@ import de.minestar.Webpanel.core.Webpanel;
 import de.minestar.Webpanel.exceptions.LoginInvalidException;
 import de.minestar.Webpanel.units.AuthHandler;
 import de.minestar.Webpanel.units.HandlerList;
+import de.minestar.Webpanel.units.UserData;
 
 public class PageHandler implements HttpHandler {
 
     private String defaultPage = "/login.html";
     private String errorPage = "/error404.html";
     private String invalidLoginPage = "/invalidLogin.html";
+    private String insufficentRights = "/insufficentRights.html";
 
     @SuppressWarnings("unchecked")
     public void handle(HttpExchange http) throws IOException {
@@ -55,6 +57,14 @@ public class PageHandler implements HttpHandler {
 
         // get the parameters
         Map<String, String> params = (Map<String, String>) http.getAttribute("parameters");
+        String userName = params.get("username");
+        String token = params.get("token");
+
+        // get the current user
+        UserData currentUser = AuthHandler.defaultUser;
+        if (userName != null && token != null && AuthHandler.isUserLoginValid(userName, token)) {
+            currentUser = AuthHandler.getUser(userName);
+        }
 
         try {
             if (HandlerList.hasHandler(pageName)) {
@@ -64,28 +74,40 @@ public class PageHandler implements HttpHandler {
                 // construct the response...
                 String response = "";
                 if (handler.needsLogin()) {
-                    String userName = params.get("username");
-                    String token = params.get("token");
                     if (userName == null || token == null || !AuthHandler.isUserLoginValid(userName, token)) {
                         // user is invalid, so display invalid loginpage...
-                        response = HandlerList.getHandler(this.invalidLoginPage).handle(http, params);
+                        AbstractHTMLHandler invalidHandler = HandlerList.getHandler(this.invalidLoginPage);
+                        response = "ERROR - Login invalid!";
+                        if (invalidHandler != null) {
+                            response = invalidHandler.handle(http, params, currentUser);
+                        }
                     } else {
-                        // update the token
-                        AuthHandler.refreshUserToken(userName);
+                        // check if the level is high enough
+                        if (currentUser.getLevel() >= handler.getNeededLevel()) {
+                            // update the token
+                            AuthHandler.refreshUserToken(userName);
 
-                        // login is valid, so display...
-                        response = HandlerList.getHandler(pageName).handle(http, params);
+                            // login is valid, so display...
+                            response = handler.handle(http, params, AuthHandler.getUser(userName));
+                        } else {
+                            // user is invalid, so display invalid loginpage...
+                            AbstractHTMLHandler insufficentRights = HandlerList.getHandler(this.insufficentRights);
+                            response = "ERROR - Insufficent rights!";
+                            if (insufficentRights != null) {
+                                response = insufficentRights.handle(http, params, currentUser);
+                            }
+                        }
                     }
                 } else {
                     try {
                         // no login needed, just display...
-                        response = HandlerList.getHandler(pageName).handle(http, params);
+                        response = HandlerList.getHandler(pageName).handle(http, params, currentUser);
                     } catch (LoginInvalidException e) {
                         // this is needed only for the doLogin-page...
                         AbstractHTMLHandler invalidHandler = HandlerList.getHandler(this.invalidLoginPage);
                         response = "ERROR - Login invalid!";
                         if (invalidHandler != null) {
-                            response = invalidHandler.handle(http, params);
+                            response = invalidHandler.handle(http, params, currentUser);
                         }
                     }
                 }
@@ -121,7 +143,7 @@ public class PageHandler implements HttpHandler {
                 AbstractHTMLHandler errorHandler = HandlerList.getHandler(this.errorPage);
                 String response = "ERROR404 - Page not found!";
                 if (errorHandler != null) {
-                    response = errorHandler.handle(http, params);
+                    response = errorHandler.handle(http, params, currentUser);
                 }
                 http.sendResponseHeaders(200, response.length());
                 OutputStream os = http.getResponseBody();
@@ -137,6 +159,10 @@ public class PageHandler implements HttpHandler {
             os.write(response.getBytes());
             os.close();
         }
+    }
+
+    public void setInsufficentRights(String insufficentRights) {
+        this.insufficentRights = insufficentRights;
     }
 
     public void setInvalidLoginPage(String invalidLoginPage) {

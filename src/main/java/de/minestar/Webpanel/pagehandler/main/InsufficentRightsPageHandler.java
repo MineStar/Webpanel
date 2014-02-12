@@ -22,21 +22,19 @@ import java.util.Map;
 
 import com.sun.net.httpserver.HttpExchange;
 
-import de.minestar.Webpanel.exceptions.LoginInvalidException;
 import de.minestar.Webpanel.template.TemplateHandler;
-import de.minestar.Webpanel.units.AuthHandler;
 import de.minestar.Webpanel.units.UserData;
 
-public class LogoutPageHandler extends CustomPageHandler {
+public class InsufficentRightsPageHandler extends CustomPageHandler {
 
-    public LogoutPageHandler() {
-        super(true, -1, TemplateHandler.getTemplate("logout"));
+    public InsufficentRightsPageHandler() {
+        super(false, -1, TemplateHandler.getTemplate("insufficentRights"));
     }
 
     @Override
-    public String handle(HttpExchange http, Map<String, String> params, UserData userData) throws LoginInvalidException {
-        super.updateReplacements(http);
-        AuthHandler.logoutUser(this.rpl_user.getValue());
-        return this.template.compile(AuthHandler.defaultUser);
+    public String handle(HttpExchange http, Map<String, String> params, UserData userData) {
+        this.rpl_user.setValue(userData.getUserName());
+        this.rpl_token.setValue(userData.getToken());
+        return this.template.compile(userData, this.rpl_user, this.rpl_token);
     }
 }

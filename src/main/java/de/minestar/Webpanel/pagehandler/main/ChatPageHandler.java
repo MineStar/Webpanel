@@ -24,16 +24,17 @@ import com.sun.net.httpserver.HttpExchange;
 
 import de.minestar.Webpanel.exceptions.LoginInvalidException;
 import de.minestar.Webpanel.template.TemplateHandler;
+import de.minestar.Webpanel.units.UserData;
 
 public class ChatPageHandler extends CustomPageHandler {
 
     public ChatPageHandler() {
-        super(true, TemplateHandler.getTemplate("chat"));
+        super(true, 0, TemplateHandler.getTemplate("chat"));
     }
 
     @Override
-    public String handle(HttpExchange http, Map<String, String> params) throws LoginInvalidException {
+    public String handle(HttpExchange http, Map<String, String> params, UserData userData) throws LoginInvalidException {
         super.updateReplacements(http);
-        return this.template.compile(this.rpl_user, this.rpl_token);
+        return this.template.compile(userData, this.rpl_user, this.rpl_token);
     }
 }

@@ -27,19 +27,20 @@ import de.minestar.Webpanel.exceptions.LoginInvalidException;
 import de.minestar.Webpanel.pagehandler.main.CustomPageHandler;
 import de.minestar.Webpanel.template.TemplateHandler;
 import de.minestar.Webpanel.template.TemplateReplacement;
+import de.minestar.Webpanel.units.UserData;
 
 public class BanPageHandler extends CustomPageHandler {
 
     private final TemplateReplacement rpl_topic, rpl_message;
 
     public BanPageHandler() {
-        super(true, TemplateHandler.getTemplate("action_normal"));
+        super(true, 10, TemplateHandler.getTemplate("action_normal"));
         this.rpl_topic = new TemplateReplacement("TOPIC");
         this.rpl_message = new TemplateReplacement("MESSAGE");
     }
 
     @Override
-    public String handle(HttpExchange http, Map<String, String> params) throws LoginInvalidException {
+    public String handle(HttpExchange http, Map<String, String> params, UserData userData) throws LoginInvalidException {
         super.updateReplacements(http);
 
         String playerName = params.get("player");
@@ -67,6 +68,6 @@ public class BanPageHandler extends CustomPageHandler {
             this.rpl_message.setValue("Du musst einen Spielernamen angeben.");
         }
 
-        return this.template.compile(this.rpl_user, this.rpl_token, this.rpl_topic, this.rpl_message);
+        return this.template.compile(userData, this.rpl_user, this.rpl_token, this.rpl_topic, this.rpl_message);
     }
 }

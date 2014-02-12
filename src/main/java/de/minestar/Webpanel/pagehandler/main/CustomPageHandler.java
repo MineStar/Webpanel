@@ -7,7 +7,6 @@ import com.sun.net.httpserver.HttpExchange;
 import de.minestar.Webpanel.exceptions.LoginInvalidException;
 import de.minestar.Webpanel.pagehandler.AbstractHTMLHandler;
 import de.minestar.Webpanel.template.Template;
-import de.minestar.Webpanel.template.TemplateHandler;
 import de.minestar.Webpanel.template.TemplateReplacement;
 import de.minestar.Webpanel.units.AuthHandler;
 import de.minestar.Webpanel.units.UserData;
@@ -15,14 +14,14 @@ import de.minestar.Webpanel.units.UserData;
 public abstract class CustomPageHandler extends AbstractHTMLHandler {
 
     protected Template template;
-    protected final TemplateReplacement rpl_navigation, rpl_user, rpl_token;
+    protected final TemplateReplacement rpl_user, rpl_token;
 
-    protected CustomPageHandler(boolean needsLogin) {
-        this(needsLogin, Template.emptyTemplate());
+    protected CustomPageHandler(boolean needsLogin, int neededLevel) {
+        this(needsLogin, neededLevel, Template.emptyTemplate());
     }
 
-    protected CustomPageHandler(boolean needsLogin, Template template) {
-        super(needsLogin);
+    protected CustomPageHandler(boolean needsLogin, int neededLevel, Template template) {
+        super(needsLogin, neededLevel);
 
         // set template
         this.template = template;
@@ -30,11 +29,6 @@ public abstract class CustomPageHandler extends AbstractHTMLHandler {
         // create replacements
         this.rpl_user = new TemplateReplacement("USERNAME");
         this.rpl_token = new TemplateReplacement("TOKEN");
-        if (needsLogin) {
-            this.rpl_navigation = new TemplateReplacement("NAVIGATION", TemplateHandler.getTemplate("tpl_navi_on").getString());
-        } else {
-            this.rpl_navigation = new TemplateReplacement("NAVIGATION", TemplateHandler.getTemplate("tpl_navi_off").getString());
-        }
     }
 
     @SuppressWarnings("unchecked")

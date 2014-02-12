@@ -26,6 +26,7 @@ import de.minestar.Webpanel.utils.SHA;
 
 public class AuthHandler {
     private static HashMap<String, UserData> loggedInUsers;
+    public static UserData defaultUser = new UserData("USER_NOT_LOGGED_IN", -1);
     private static HashMap<String, AdminData> adminData;
 
     public static boolean init() {
@@ -33,16 +34,17 @@ public class AuthHandler {
         adminData = new HashMap<String, AdminData>();
         try {
             String hashed = SHA.getHash("test".getBytes());
-            addAdmin("gemo", hashed, UUID.randomUUID().toString());
+            addAdmin("admin", hashed, UUID.randomUUID().toString(), 10);
+            addAdmin("user", hashed, UUID.randomUUID().toString(), 0);
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
         return true;
     }
 
-    private static void addAdmin(String userName, String hashedPassword, String passwordSalt) {
+    private static void addAdmin(String userName, String hashedPassword, String passwordSalt, int level) {
         try {
-            AdminData user = new AdminData(userName, hashedPassword, passwordSalt);
+            AdminData user = new AdminData(userName, hashedPassword, passwordSalt, level);
             adminData.put(userName, user);
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
@@ -95,8 +97,8 @@ public class AuthHandler {
     }
 
     public static void loginUser(String name) {
-        if (!hasUser(name)) {
-            loggedInUsers.put(name, new UserData(name));
+        if (!hasUser(name) || !hasAdmin(name)) {
+            loggedInUsers.put(name, new UserData(name, getAdmin(name).getLevel()));
         } else {
             getUser(name).updateToken();
         }
