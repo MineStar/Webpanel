@@ -34,8 +34,11 @@ public class AuthHandler {
         adminData = new HashMap<String, AdminData>();
         try {
             String hashed = SHA.getHash("test".getBytes());
-            addAdmin("admin", hashed, UUID.randomUUID().toString(), 10);
-            addAdmin("user", hashed, UUID.randomUUID().toString(), 0);
+            addAdmin("admin", hashed, UUID.randomUUID().toString(), UserLevel.ADMIN.getLevel());
+            addAdmin("mod", hashed, UUID.randomUUID().toString(), UserLevel.MOD.getLevel());
+            addAdmin("pay", hashed, UUID.randomUUID().toString(), UserLevel.PAY.getLevel());
+            addAdmin("free", hashed, UUID.randomUUID().toString(), UserLevel.FREE.getLevel());
+            addAdmin("probe", hashed, UUID.randomUUID().toString(), UserLevel.PROBE.getLevel());
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }

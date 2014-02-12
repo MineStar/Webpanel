@@ -11,6 +11,8 @@ public class AdminStuffService extends RegisterService {
     protected void registerTemplates() {
         // register AdminStuff-Templates
         this.registerTemplate("AdminStuff", "/AdminStuff/plugin.html");
+        this.registerTemplate("as_mods", "/AdminStuff/mods.html");
+        this.registerTemplate("as_admins", "/AdminStuff/admins.html");
     }
 
     @Override

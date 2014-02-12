@@ -24,11 +24,12 @@ import com.sun.net.httpserver.HttpExchange;
 
 import de.minestar.Webpanel.template.TemplateHandler;
 import de.minestar.Webpanel.units.UserData;
+import de.minestar.Webpanel.units.UserLevel;
 
 public class InsufficentRightsPageHandler extends CustomPageHandler {
 
     public InsufficentRightsPageHandler() {
-        super(false, -1, TemplateHandler.getTemplate("insufficentRights"));
+        super(false, UserLevel.DEFAULT.getLevel(), TemplateHandler.getTemplate("insufficentRights"));
     }
 
     @Override

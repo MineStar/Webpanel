@@ -28,13 +28,14 @@ import de.minestar.Webpanel.pagehandler.main.CustomPageHandler;
 import de.minestar.Webpanel.template.TemplateHandler;
 import de.minestar.Webpanel.template.TemplateReplacement;
 import de.minestar.Webpanel.units.UserData;
+import de.minestar.Webpanel.units.UserLevel;
 
 public class BanPageHandler extends CustomPageHandler {
 
     private final TemplateReplacement rpl_topic, rpl_message;
 
     public BanPageHandler() {
-        super(true, 10, TemplateHandler.getTemplate("action_normal"));
+        super(true, UserLevel.ADMIN.getLevel(), TemplateHandler.getTemplate("action_normal"));
         this.rpl_topic = new TemplateReplacement("TOPIC");
         this.rpl_message = new TemplateReplacement("MESSAGE");
     }

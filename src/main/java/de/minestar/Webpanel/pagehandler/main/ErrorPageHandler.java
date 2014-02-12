@@ -25,11 +25,12 @@ import com.sun.net.httpserver.HttpExchange;
 import de.minestar.Webpanel.template.TemplateHandler;
 import de.minestar.Webpanel.units.AuthHandler;
 import de.minestar.Webpanel.units.UserData;
+import de.minestar.Webpanel.units.UserLevel;
 
 public class ErrorPageHandler extends CustomPageHandler {
 
     public ErrorPageHandler() {
-        super(false, -1, TemplateHandler.getTemplate("error404"));
+        super(false, UserLevel.DEFAULT.getLevel(), TemplateHandler.getTemplate("error404"));
     }
 
     @Override

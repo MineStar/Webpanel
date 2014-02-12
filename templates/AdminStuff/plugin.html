@@ -56,38 +56,8 @@
             <div id="content_spacer"></div>
             <div id="content_plugin_topic">AdminStuff</div>            
             <div id="content_spacer"></div>
-            
-            <div class="content_topic_switch" id="topic_kick">/kick</div>
-            <div class="content_frame_switch" id="content_kick">            
-                <form method="POST" action="AS_kickPlayer.html?username={USERNAME}&token={TOKEN}">
-			        <label class="lbl_small" for="plList"><img style="vertical-align: middle;" class="refreshPlayers" src="images/gui/btn_refresh.gif" />Spieler:</label><div class="playerlist" id="plList">{PLAYERLIST}</div>
-     				<label class="lbl_small" for="reason">Grund: </label><input class="txt_big" type="text" style="width: 450px;" maxlength="64" name="reason" id="reason">
-        	 		<input class="btn_middle" type="submit" value="OK" />
-            	</form>  
-            	<NOELEMENT style="clear:both;">         	
-            </div>
-            <div id="content_spacer"></div>
-            
-            <div class="content_topic_switch" id="topic_ban">/ban</div>
-            <div class="content_frame_switch" id="content_ban">
-            	<form method="POST" action="AS_banPlayer.html?username={USERNAME}&token={TOKEN}">
-	           		<label class="lbl_small" for="reason">Spieler:</label><input class="txt_big" type="text" style="width: 450px;" maxlength="64" name="player" id="player">
-        	 		<label class="lbl_small" for="reason">Grund:</label><input class="txt_big" type="text" style="width: 450px;" maxlength="64" name="reason" id="reason">
-        	 		<input class="btn_middle" type="submit" value="OK" />
-            	</form>  
-            	<NOELEMENT style="clear:both;">        
-            </div>            
-            <div id="content_spacer"></div>
-            
-            <div class="content_topic_switch" id="topic_god">/god</div>
-            <div class="content_frame_switch" id="content_god">
-             	<form method="POST" action="AS_godmode.html?username={USERNAME}&token={TOKEN}">
-	           		<label class="lbl_small" for="plList"><img style="vertical-align: middle;" class="refreshPlayers" src="images/gui/btn_refresh.gif" /> Spieler:</label><div class="playerlist" id="plList">{PLAYERLIST}</div>
-     				<input class="btn_middle" type="submit" value="OK" />
-            	</form>
-                <NOELEMENT style="clear:both;">     
-            </div>            
-            <div id="content_spacer"></div>
+            {TEMPLATE:as_mods:30}
+            {TEMPLATE:as_admins:=40}
         </div>
         <div id="footer"></div>
     </div>

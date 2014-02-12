@@ -29,6 +29,7 @@ import de.minestar.Webpanel.template.TemplateHandler;
 import de.minestar.Webpanel.template.TemplateReplacement;
 import de.minestar.Webpanel.units.AuthHandler;
 import de.minestar.Webpanel.units.UserData;
+import de.minestar.Webpanel.units.UserLevel;
 
 public class DoLoginPageHandler extends AbstractHTMLHandler {
 
@@ -36,7 +37,7 @@ public class DoLoginPageHandler extends AbstractHTMLHandler {
     private TemplateReplacement rpl_user, rpl_token;
 
     public DoLoginPageHandler() {
-        super(false, -1);
+        super(false, UserLevel.DEFAULT.getLevel());
         this.template = TemplateHandler.getTemplate("doLogin");
         this.rpl_user = new TemplateReplacement("USERNAME");
         this.rpl_token = new TemplateReplacement("TOKEN");

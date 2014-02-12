@@ -26,13 +26,14 @@ import de.minestar.Webpanel.pagehandler.AbstractHTMLHandler;
 import de.minestar.Webpanel.template.Template;
 import de.minestar.Webpanel.template.TemplateHandler;
 import de.minestar.Webpanel.units.UserData;
+import de.minestar.Webpanel.units.UserLevel;
 
 public class LoginPageHandler extends AbstractHTMLHandler {
 
     private Template template;
 
     public LoginPageHandler() {
-        super(false, -1);
+        super(false, UserLevel.DEFAULT.getLevel());
         this.template = TemplateHandler.getTemplate("login");
     }
 

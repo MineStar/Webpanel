@@ -30,6 +30,7 @@ import de.minestar.Webpanel.pagehandler.main.CustomPageHandler;
 import de.minestar.Webpanel.template.TemplateHandler;
 import de.minestar.Webpanel.template.TemplateReplacement;
 import de.minestar.Webpanel.units.UserData;
+import de.minestar.Webpanel.units.UserLevel;
 import de.minestar.Webpanel.utils.Helper;
 
 public class AdminStuffPageHandler extends CustomPageHandler {
@@ -37,7 +38,7 @@ public class AdminStuffPageHandler extends CustomPageHandler {
     private TemplateReplacement rpl_playerList;
 
     public AdminStuffPageHandler() {
-        super(true, 10, TemplateHandler.getTemplate("AdminStuff"));
+        super(true, UserLevel.MOD.getLevel(), TemplateHandler.getTemplate("AdminStuff"));
         this.rpl_playerList = new TemplateReplacement("PLAYERLIST");
     }
 

@@ -26,11 +26,12 @@ import de.minestar.Webpanel.exceptions.LoginInvalidException;
 import de.minestar.Webpanel.template.TemplateHandler;
 import de.minestar.Webpanel.units.AuthHandler;
 import de.minestar.Webpanel.units.UserData;
+import de.minestar.Webpanel.units.UserLevel;
 
 public class LogoutPageHandler extends CustomPageHandler {
 
     public LogoutPageHandler() {
-        super(true, -1, TemplateHandler.getTemplate("logout"));
+        super(true, UserLevel.DEFAULT.getLevel(), TemplateHandler.getTemplate("logout"));
     }
 
     @Override

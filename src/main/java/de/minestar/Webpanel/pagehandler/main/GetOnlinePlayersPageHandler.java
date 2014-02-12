@@ -27,12 +27,13 @@ import com.sun.net.httpserver.HttpExchange;
 
 import de.minestar.Webpanel.exceptions.LoginInvalidException;
 import de.minestar.Webpanel.units.UserData;
+import de.minestar.Webpanel.units.UserLevel;
 import de.minestar.Webpanel.utils.Helper;
 
 public class GetOnlinePlayersPageHandler extends CustomPageHandler {
 
     public GetOnlinePlayersPageHandler() {
-        super(true, 0);
+        super(true, UserLevel.PROBE.getLevel());
     }
 
     @Override

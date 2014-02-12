@@ -25,11 +25,12 @@ import com.sun.net.httpserver.HttpExchange;
 import de.minestar.Webpanel.exceptions.LoginInvalidException;
 import de.minestar.Webpanel.template.TemplateHandler;
 import de.minestar.Webpanel.units.UserData;
+import de.minestar.Webpanel.units.UserLevel;
 
 public class ChatPageHandler extends CustomPageHandler {
 
     public ChatPageHandler() {
-        super(true, 0, TemplateHandler.getTemplate("chat"));
+        super(true, UserLevel.PROBE.getLevel(), TemplateHandler.getTemplate("chat"));
     }
 
     @Override
