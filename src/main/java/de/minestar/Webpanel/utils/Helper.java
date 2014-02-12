@@ -2,8 +2,8 @@ package de.minestar.Webpanel.utils;
 
 public class Helper {
 
-    public static String StringToDropDown(String elementName, String text, String delimiter) {
-        String response = "<select name='" + elementName + "'>";
+    public static String StringToDropDown(String elementName, String text, String delimiter, String className) {
+        String response = "<select class='" + className + "' name='" + elementName + "'>";
         String[] split = text.split(delimiter);
         for (String single : split) {
             if (split.length > 0) {

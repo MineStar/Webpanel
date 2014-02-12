@@ -34,8 +34,8 @@
             	showDIV("#content_ban"); 
             });
                         
-            $("#topic_fish").click(function(){
-            	showDIV("#content_fish"); 
+            $("#topic_god").click(function(){
+            	showDIV("#content_god"); 
             });
             
             $(".refreshPlayers").click(function(){
@@ -58,48 +58,34 @@
             <div id="content_spacer"></div>
             
             <div class="content_topic_switch" id="topic_kick">/kick</div>
-            <div class="content_frame_switch" id="content_kick">
+            <div class="content_frame_switch" id="content_kick">            
                 <form method="POST" action="AS_kickPlayer.html?username={USERNAME}&token={TOKEN}">
-	           		<table style="margin-left: auto; margin-right: auto;" width="600" cellspacing="0" cellpadding="5">
-	           		<tr>
-		            	<td align="right" width="100"><b>Spieler: </b><img class="refreshPlayers" src="images/gui/btn_refresh.gif" /></td>
-		            	<td width="400"><div class="playerlist">{PLAYERLIST}</div></td>
-	            	</tr>   
-	            	<tr>      	
-		            	<td align="right" width="100"><b>Grund:</b></td>
-		            	<td width="500"><input type="text" style="width: 450px;" maxlength="64" name="reason"></td>
-	            	</tr> 
-	            	<tr>      	
-		            	<td align="center" width="500" colspan="2"><input style="width:150px" type="submit" value="Kicken" /></td>
-	            	</tr> 
-	            	</table>
-            	</form>           	
+			        <label class="lbl_small" for="plList"><img style="vertical-align: middle;" class="refreshPlayers" src="images/gui/btn_refresh.gif" />Spieler:</label><div class="playerlist" id="plList">{PLAYERLIST}</div>
+     				<label class="lbl_small" for="reason">Grund: </label><input class="txt_big" type="text" style="width: 450px;" maxlength="64" name="reason" id="reason">
+        	 		<input class="btn_middle" type="submit" value="OK" />
+            	</form>  
+            	<NOELEMENT style="clear:both;">         	
             </div>
             <div id="content_spacer"></div>
             
             <div class="content_topic_switch" id="topic_ban">/ban</div>
             <div class="content_frame_switch" id="content_ban">
             	<form method="POST" action="AS_banPlayer.html?username={USERNAME}&token={TOKEN}">
-	           		<table style="margin-left: auto; margin-right: auto;" width="600" cellspacing="0" cellpadding="5">
-	           		<tr>
-		            	<td align="right" width="100"><b>Spieler: </b></td>
-		            	<td width="500"><input type="text" style="width: 450px;" maxlength="64" name="player"></td>
-	            	</tr>   
-	            	<tr>      	
-		            	<td align="right" width="100"><b>Grund:</b></td>
-		            	<td width="500"><input type="text" style="width: 450px;" maxlength="64" name="reason"></td>
-	            	</tr> 
-	            	<tr>      	
-		            	<td align="center" width="600" colspan="2"><input style="width:150px" type="submit" value="Bannen" /></td>
-	            	</tr> 
-	            	</table>
-            	</form>   
+	           		<label class="lbl_small" for="reason">Spieler:</label><input class="txt_big" type="text" style="width: 450px;" maxlength="64" name="player" id="player">
+        	 		<label class="lbl_small" for="reason">Grund:</label><input class="txt_big" type="text" style="width: 450px;" maxlength="64" name="reason" id="reason">
+        	 		<input class="btn_middle" type="submit" value="OK" />
+            	</form>  
+            	<NOELEMENT style="clear:both;">        
             </div>            
             <div id="content_spacer"></div>
             
-            <div class="content_topic_switch" id="topic_fish">/fish</div>
-            <div class="content_frame_switch" id="content_fish">
-            	Fishformular
+            <div class="content_topic_switch" id="topic_god">/god</div>
+            <div class="content_frame_switch" id="content_god">
+             	<form method="POST" action="AS_godmode.html?username={USERNAME}&token={TOKEN}">
+	           		<label class="lbl_small" for="plList"><img style="vertical-align: middle;" class="refreshPlayers" src="images/gui/btn_refresh.gif" /> Spieler:</label><div class="playerlist" id="plList">{PLAYERLIST}</div>
+     				<input class="btn_middle" type="submit" value="OK" />
+            	</form>
+                <NOELEMENT style="clear:both;">     
             </div>            
             <div id="content_spacer"></div>
         </div>

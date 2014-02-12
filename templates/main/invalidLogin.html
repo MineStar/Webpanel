@@ -16,23 +16,15 @@
             
             <div id="content_topic">Login</div>            
             <div id="content_frame">
-            <form method="POST" action="doLogin.html">
-	           		<table style="margin-left: auto; margin-right: auto;" width="300" cellspacing="0" cellpadding="5">
-	           		<tr>
-		            	<td align="right" width="100"><b>Benutzername:</b></td>
-		            	<td width="200"><input type="text" width="150" name="txt_username"></td>
-	            	</tr>   
-	            	<tr>      	
-		            	<td align="right" width="100"><b>Passwort:</b></td>
-		            	<td width="200"><input type="text" width="150" name="txt_password"></td>
-	            	</tr> 
-	            	<tr>      	
-		            	<td align="center" width="100" colspan="2"><input style="width:150px" type="submit" value="Einloggen" /></td>
-	            	</tr> 
-	            	</table>
-            </form>
-            </div>                 
-            
+	            <form method="POST" action="doLogin.html">
+		           		<label class="lbl_login" for="txt_username">Benutzername:</label><input class="txt_login" type="text" name="txt_username">
+	                    <label class="lbl_login" for="txt_password">Passwort:</label><input class="txt_login" type="text" name="txt_password">
+	                    <center>
+	                    <input class="btn_middle" type="submit" value="Einloggen" />
+	                    </center>
+	            </form>
+            	<NOELEMENT style="clear:both;">
+            </div> 
             <div id="content_spacer"></div>
         </div>
         <div id="footer"></div>

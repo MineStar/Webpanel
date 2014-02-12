@@ -49,7 +49,7 @@ public class KickPageHandler extends CustomPageHandler {
         if (playerName != null) {
             Player player = PlayerUtils.getOnlinePlayer(playerName);
             if (player != null) {
-                // kick player
+                // get reason
                 String reason = params.get("reason");
                 if (reason != null) {
                     reason = reason.trim();

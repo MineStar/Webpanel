@@ -37,7 +37,7 @@ public class GetOnlinePlayersPageHandler extends CustomPageHandler {
     @Override
     public String handle(HttpExchange http, Map<String, String> params) throws LoginInvalidException {
         super.updateReplacements(http);
-        return Helper.StringToDropDown("player", this.getPlayerList(), ";");
+        return Helper.StringToDropDown("player", this.getPlayerList(), ";", "dropdown_big");
     }
 
     private String getPlayerList() {

@@ -2,6 +2,7 @@ package de.minestar.Webpanel.services;
 
 import de.minestar.Webpanel.pagehandler.AdminStuff.AdminStuffPageHandler;
 import de.minestar.Webpanel.pagehandler.AdminStuff.BanPageHandler;
+import de.minestar.Webpanel.pagehandler.AdminStuff.GodmodePageHandler;
 import de.minestar.Webpanel.pagehandler.AdminStuff.KickPageHandler;
 
 public class AdminStuffService extends RegisterService {
@@ -18,5 +19,6 @@ public class AdminStuffService extends RegisterService {
         this.registerPage(new AdminStuffPageHandler(), "/AdminStuff.html");
         this.registerPage(new KickPageHandler(), "/AS_kickPlayer.html");
         this.registerPage(new BanPageHandler(), "/AS_banPlayer.html");
+        this.registerPage(new GodmodePageHandler(), "/AS_godmode.html");
     }
 }

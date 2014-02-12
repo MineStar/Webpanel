@@ -43,7 +43,7 @@ public class AdminStuffPageHandler extends CustomPageHandler {
     @Override
     public String handle(HttpExchange http, Map<String, String> params) throws LoginInvalidException {
         super.updateReplacements(http);
-        this.rpl_playerList.setValue(Helper.StringToDropDown("player", this.getPlayerList(), ";"));
+        this.rpl_playerList.setValue(Helper.StringToDropDown("player", this.getPlayerList(), ";", "dropdown_big"));
         return this.template.compile(this.rpl_playerList, this.rpl_user, this.rpl_token);
     }
 

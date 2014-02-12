@@ -20,6 +20,8 @@ package de.minestar.Webpanel.pagehandler.AdminStuff;
 
 import java.util.Map;
 
+import org.bukkit.entity.Player;
+
 import com.sun.net.httpserver.HttpExchange;
 
 import de.minestar.Webpanel.core.CommandQueue;
@@ -27,12 +29,15 @@ import de.minestar.Webpanel.exceptions.LoginInvalidException;
 import de.minestar.Webpanel.pagehandler.main.CustomPageHandler;
 import de.minestar.Webpanel.template.TemplateHandler;
 import de.minestar.Webpanel.template.TemplateReplacement;
+import de.minestar.core.MinestarCore;
+import de.minestar.core.units.MinestarPlayer;
+import de.minestar.minestarlibrary.utils.PlayerUtils;
 
-public class BanPageHandler extends CustomPageHandler {
+public class GodmodePageHandler extends CustomPageHandler {
 
     private final TemplateReplacement rpl_topic, rpl_message;
 
-    public BanPageHandler() {
+    public GodmodePageHandler() {
         super(true, TemplateHandler.getTemplate("action_normal"));
         this.rpl_topic = new TemplateReplacement("TOPIC");
         this.rpl_message = new TemplateReplacement("MESSAGE");
@@ -44,22 +49,32 @@ public class BanPageHandler extends CustomPageHandler {
 
         String playerName = params.get("player");
         if (playerName != null) {
-            playerName = playerName.replace(" ", "").trim();
-            // get reason
-            String reason = params.get("reason");
-            if (reason != null) {
-                reason = reason.trim();
-            }
-            if (reason == null || reason.length() < 1) {
-                this.template = TemplateHandler.getTemplate("action_error");
-                this.rpl_topic.setValue("Kein Grund angegeben!");
-                this.rpl_message.setValue("Du musst einen Grund angeben.");
-            } else {
-                CommandQueue.queue("ban " + playerName + " " + reason);
+            Player player = PlayerUtils.getOnlinePlayer(playerName);
+            if (player != null) {
+                // queue command
+                CommandQueue.queue("god " + player.getName());
+
+                // get current godmode
+                MinestarPlayer mPlayer = MinestarCore.getPlayer(player);
+                Boolean isInGodMode = mPlayer.getBoolean("adminstuff.god");
+                if (isInGodMode != null && isInGodMode) {
+                    isInGodMode = true;
+                } else {
+                    isInGodMode = false;
+                }
+
                 // set info
                 this.template = TemplateHandler.getTemplate("action_success");
-                this.rpl_topic.setValue("Spieler gebannt!");
-                this.rpl_message.setValue("Spieler '" + playerName + "' wurde gebannt (Grund: '" + reason + "').");
+                this.rpl_topic.setValue("Godmode");
+                if (isInGodMode) {
+                    this.rpl_message.setValue("'" + playerName + "' ist jetzt wieder sterblich.");
+                } else {
+                    this.rpl_message.setValue("'" + playerName + "' ist jetzt unsterblich.");
+                }
+            } else {
+                this.template = TemplateHandler.getTemplate("action_error");
+                this.rpl_topic.setValue("Spieler nicht online!");
+                this.rpl_message.setValue("Die Aktion konnte nicht ausgeführt werden, weil '" + playerName + "' nicht online ist.");
             }
         } else {
             this.template = TemplateHandler.getTemplate("action_error");

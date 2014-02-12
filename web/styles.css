@@ -6,6 +6,7 @@ body, html {
     font-family: 'Segoe UI', 'Verdana', sans-serif;
 }
 
+
 #wrap {
     width: 922px;
     margin: 0 auto;
@@ -116,6 +117,7 @@ body, html {
 
 #content_spacer {
     margin: 20px auto;
+    clear: both;
 }
 
 #content_plugin_topic {
@@ -189,4 +191,68 @@ body, html {
     color: #000000;
     padding: 5px;
     display:none;
+}
+
+
+.lbl_login {
+    width: 256px;    
+    clear: both;
+    font-weight: bold;
+    margin: 5px;
+    margin-top: 0px;
+    display: block;
+    float: left;
+    text-align: right;
+    vertical-align: middle;
+    line-height: 20px; 
+    height: 20px;
+}
+
+.txt_login {
+    float: left;    
+    width: 150px;
+    display: block;
+    vertical-align: middle;
+    height: 20px;
+}
+
+.lbl_small {
+    width: 150px;
+    clear: both;
+    font-weight: bold;
+    margin: 10px;
+    margin-top: 0px;
+    display: block;
+    float: left;
+    text-align: right;
+    vertical-align: middle;
+    line-height: 20px; 
+    height: 20px;
+}
+
+.dropdown_big {
+    float: left;    
+    width: 456px;
+    display: block;
+    vertical-align: middle;
+    height: 20px;
+    margin-bottom: 5px;
+}
+
+.txt_big {
+    float: left;    
+    width: 450px;
+    display: block;
+    vertical-align: middle;
+    height: 20px;
+    margin-bottom: 5px;
+}
+
+.btn_middle {   
+    clear: both;
+    margin: auto;
+    width: 158px;
+    display: block;
+    vertical-align: middle;
+    height: 25px;
 }
