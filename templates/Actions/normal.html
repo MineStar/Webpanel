@@ -1,24 +1,8 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="de">
-<head>
-    <link rel="stylesheet" media="all" href="styles.css">
-    <script src="scripts/jquery-2.1.0.js" type="text/javascript"></script> 
-</head>
-<body>
-    <div id="wrap">
-        <div id="header"></div>
-        <div id="sidebar">
-            {TEMPLATE:tpl_navi_on}
-        </div>
-        <div id="main">
+{FILE:head.html}
             <div id="content_spacer"></div>
             <div id="content_topic">{TOPIC}</div>   
             <div id="content_frame">
             	{MESSAGE}
             </div>         
-            <div id="content_spacer"></div>          
-        </div>
-        <div id="footer"></div>
-    </div>
-</body>
-</html>
+            <div id="content_spacer"></div>
+{FILE:footer.html}

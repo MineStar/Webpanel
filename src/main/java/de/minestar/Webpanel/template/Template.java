@@ -8,6 +8,7 @@ import de.minestar.Webpanel.core.Webpanel;
 import de.minestar.Webpanel.handler.EmbeddedFileHandler;
 import de.minestar.Webpanel.handler.TemplateHandler;
 import de.minestar.Webpanel.units.UserData;
+import de.minestar.Webpanel.units.UserLevel;
 
 public class Template {
     protected final String name;
@@ -48,7 +49,15 @@ public class Template {
         }
         String text = template.getString();
         text = searchEmbeddedFiles(text);
+        text = replaceUserLevels(text);
         text = searchTemplates(text, userData, depth);
+        return text;
+    }
+
+    private String replaceUserLevels(String text) {
+        for (UserLevel level : UserLevel.values()) {
+            text = text.replaceAll("\\[USERLEVEL:" + level.name() + "\\]", level.getLevel() + "");
+        }
         return text;
     }
 
@@ -94,14 +103,15 @@ public class Template {
                 continue;
             }
 
-            // get minimumUserlevel
-            // retrieve the templateName
+            // get templateName, minimumUserlevel, switchMode
             String templateName = split[index].substring(0, endIndex);
-
             String[] levelSplit = templateName.split(":");
             int minimumLevel = -1;
             int switchMode = 0;
-            // {TEMPLATE:templateName[:MODE]} , where MODE is "=", "<", ">"
+
+            // {TEMPLATE:templateName[:MODE&LEVEL]} , where MODE is "=", "<",
+            // ">"
+            // example: {TEMPLATE:index:>40}
             if (levelSplit.length == 2) {
                 try {
                     templateName = levelSplit[0];
