@@ -165,35 +165,6 @@ body, html {
     padding: 5px;
 }
 
-.content_topic_switch{
-    margin-top: 20px;
-    margin-bottom: 5px;
-    margin: auto;
-    width: 698px;
-    height: 22px;
-    font-weight: bold;
-    background: #5fafd0;
-    border-style: solid;
-    border-width: 1px;
-    border-color: #000000;
-    color: #ffffff;
-}
-
-.content_frame_switch {
-	text-align: left;
-    clear: both;    
-    margin: 5px auto;
-    width: 688px;
-    background: #ffffff;
-    border-style: solid;
-    border-width: 1px;
-    border-color: #000000;
-    color: #000000;
-    padding: 5px;
-    display:none;
-}
-
-
 .lbl_login {
     width: 256px;    
     clear: both;

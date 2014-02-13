@@ -1,8 +1,8 @@
 package de.minestar.Webpanel.services;
 
+import de.minestar.Webpanel.handler.TemplateHandler;
 import de.minestar.Webpanel.pagehandler.AbstractHTMLHandler;
 import de.minestar.Webpanel.template.Template;
-import de.minestar.Webpanel.template.TemplateHandler;
 import de.minestar.Webpanel.units.HandlerList;
 
 public abstract class RegisterService {

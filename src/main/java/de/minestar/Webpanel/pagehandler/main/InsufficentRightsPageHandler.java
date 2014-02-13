@@ -22,7 +22,7 @@ import java.util.Map;
 
 import com.sun.net.httpserver.HttpExchange;
 
-import de.minestar.Webpanel.template.TemplateHandler;
+import de.minestar.Webpanel.handler.TemplateHandler;
 import de.minestar.Webpanel.units.UserData;
 import de.minestar.Webpanel.units.UserLevel;
 

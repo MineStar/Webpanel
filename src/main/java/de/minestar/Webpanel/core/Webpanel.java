@@ -22,12 +22,12 @@ import java.net.InetSocketAddress;
 
 import com.sun.net.httpserver.HttpServer;
 
+import de.minestar.Webpanel.handler.AuthHandler;
 import de.minestar.Webpanel.pagehandler.PageHandler;
 import de.minestar.Webpanel.services.AdminStuffService;
 import de.minestar.Webpanel.services.MainPageService;
 import de.minestar.Webpanel.services.ServerService;
 import de.minestar.Webpanel.services.TemplateService;
-import de.minestar.Webpanel.units.AuthHandler;
 import de.minestar.Webpanel.utils.ParameterFilter;
 
 public class Webpanel {

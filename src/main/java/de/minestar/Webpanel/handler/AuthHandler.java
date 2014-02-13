@@ -16,12 +16,15 @@
  * along with AdminStuff.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.minestar.Webpanel.units;
+package de.minestar.Webpanel.handler;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.UUID;
 
+import de.minestar.Webpanel.units.AdminData;
+import de.minestar.Webpanel.units.UserData;
+import de.minestar.Webpanel.units.UserLevel;
 import de.minestar.Webpanel.utils.SHA;
 
 public class AuthHandler {

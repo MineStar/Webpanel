@@ -29,7 +29,7 @@ import com.sun.net.httpserver.HttpHandler;
 
 import de.minestar.Webpanel.core.Webpanel;
 import de.minestar.Webpanel.exceptions.LoginInvalidException;
-import de.minestar.Webpanel.units.AuthHandler;
+import de.minestar.Webpanel.handler.AuthHandler;
 import de.minestar.Webpanel.units.HandlerList;
 import de.minestar.Webpanel.units.UserData;
 

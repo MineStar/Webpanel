@@ -1,5 +1,5 @@
-           <div class="content_topic_switch" id="topic_ban">/ban</div>
-            <div class="content_frame_switch" id="content_ban">
+           	<div class="topic_switch" target="content_ban" id="content_topic">/ban</div>
+            <div class="content_switch" id="content_frame" identifier="content_ban">
             	<form method="POST" action="AS_banPlayer.html?username={USERNAME}&token={TOKEN}">
 	           		<label class="lbl_small" for="reason">Spieler:</label><input class="txt_big" type="text" style="width: 450px;" maxlength="64" name="player" id="player">
         	 		<label class="lbl_small" for="reason">Grund:</label><input class="txt_big" type="text" style="width: 450px;" maxlength="64" name="reason" id="reason">
@@ -9,8 +9,8 @@
             </div>            
             <div id="content_spacer"></div>
             
-            <div class="content_topic_switch" id="topic_god">/god</div>
-            <div class="content_frame_switch" id="content_god">
+            <div class="topic_switch" target="content_god" id="content_topic">/god</div>
+            <div class="content_switch" id="content_frame" identifier="content_god">
              	<form method="POST" action="AS_godmode.html?username={USERNAME}&token={TOKEN}">
 	           		<label class="lbl_small" for="plList"><img style="vertical-align: middle;" class="refreshPlayers" src="images/gui/btn_refresh.gif" /> Spieler:</label><div class="playerlist" id="plList">{PLAYERLIST}</div>
      				<input class="btn_middle" type="submit" value="OK" />

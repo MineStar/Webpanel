@@ -5,11 +5,13 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 
 import de.minestar.Webpanel.core.Webpanel;
+import de.minestar.Webpanel.handler.EmbeddedFileHandler;
+import de.minestar.Webpanel.handler.TemplateHandler;
 import de.minestar.Webpanel.units.UserData;
 
 public class Template {
     protected final String name;
-    protected final String string;
+    protected String string;
 
     private static Template emptyTemplate = new Template();
 
@@ -17,7 +19,7 @@ public class Template {
         return emptyTemplate;
     }
 
-    private Template() {
+    protected Template() {
         this.name = "EMPTY";
         this.string = "";
     }
@@ -45,6 +47,38 @@ public class Template {
             return template.getString();
         }
         String text = template.getString();
+        text = searchEmbeddedFiles(text);
+        text = searchTemplates(text, userData, depth);
+        return text;
+    }
+
+    private String searchEmbeddedFiles(String text) {
+        String split[] = text.split("\\{FILE:");
+
+        // handle only, if there is at least one inherited template
+        if (split.length < 2) {
+            return text;
+        }
+
+        text = split[0];
+        for (int index = 1; index < split.length; index++) {
+            // search for "}"
+            int endIndex = split[index].indexOf("}");
+            if (endIndex <= 0) {
+                continue;
+            }
+
+            // retrieve the fileName
+            String fileName = split[index].substring(0, endIndex);
+
+            // append texts
+            text += EmbeddedFileHandler.getEmbeddedFileContents(fileName);
+            text += split[index].substring(endIndex + 1);
+        }
+        return text;
+    }
+
+    private String searchTemplates(String text, UserData userData, int depth) {
         String split[] = text.split("\\{TEMPLATE:");
 
         // handle only, if there is at least one inherited template

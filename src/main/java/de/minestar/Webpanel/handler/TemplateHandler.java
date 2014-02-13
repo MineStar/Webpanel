@@ -1,9 +1,11 @@
-package de.minestar.Webpanel.template;
+package de.minestar.Webpanel.handler;
 
-import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
+
+import de.minestar.Webpanel.template.Template;
 
 public class TemplateHandler {
-    private static HashMap<String, Template> templateMap = new HashMap<String, Template>();
+    private static ConcurrentHashMap<String, Template> templateMap = new ConcurrentHashMap<String, Template>();
 
     public static boolean hasTemplate(String name) {
         return templateMap.containsKey(name);

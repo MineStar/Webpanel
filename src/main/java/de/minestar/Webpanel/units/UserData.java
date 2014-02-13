@@ -21,14 +21,15 @@ package de.minestar.Webpanel.units;
 import java.util.UUID;
 
 public class UserData {
+
+    // 1000 * minutes * seconds
+    private static final long timeoutInMS = 1000 * 60 * 5;
+
     private final String userName;
     private String token;
     private final int hashCode;
     private long lastUsed;
     private int level = -1;
-
-    // 1000 * minutes * seconds
-    private final long timeoutInMS = 1000 * 60 * 5;
 
     public UserData(String userName, int level) {
         this.userName = userName;

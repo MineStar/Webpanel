@@ -23,11 +23,11 @@ import java.util.Map;
 import com.sun.net.httpserver.HttpExchange;
 
 import de.minestar.Webpanel.exceptions.LoginInvalidException;
+import de.minestar.Webpanel.handler.AuthHandler;
+import de.minestar.Webpanel.handler.TemplateHandler;
 import de.minestar.Webpanel.pagehandler.AbstractHTMLHandler;
 import de.minestar.Webpanel.template.Template;
-import de.minestar.Webpanel.template.TemplateHandler;
 import de.minestar.Webpanel.template.TemplateReplacement;
-import de.minestar.Webpanel.units.AuthHandler;
 import de.minestar.Webpanel.units.UserData;
 import de.minestar.Webpanel.units.UserLevel;
 
