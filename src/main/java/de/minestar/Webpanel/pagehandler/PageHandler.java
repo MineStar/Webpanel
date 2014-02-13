@@ -145,7 +145,7 @@ public class PageHandler implements HttpHandler {
                 if (errorHandler != null) {
                     response = errorHandler.handle(http, params, currentUser);
                 }
-                http.sendResponseHeaders(200, response.length());
+                http.sendResponseHeaders(200, response.getBytes().length);
                 OutputStream os = http.getResponseBody();
                 os.write(response.getBytes());
                 os.close();
@@ -154,7 +154,7 @@ public class PageHandler implements HttpHandler {
             // handle internal errors...
             e.printStackTrace();
             String response = "<b>Internal servererror!</b>";
-            http.sendResponseHeaders(200, response.length());
+            http.sendResponseHeaders(200, response.getBytes().length);
             OutputStream os = http.getResponseBody();
             os.write(response.getBytes());
             os.close();
