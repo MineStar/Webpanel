@@ -113,7 +113,7 @@ public class PageHandler implements HttpHandler {
                 }
 
                 // write response
-                http.sendResponseHeaders(200, response.length());
+                http.sendResponseHeaders(200, response.getBytes().length);
                 OutputStream os = http.getResponseBody();
                 os.write(response.getBytes());
                 os.close();
