@@ -22,7 +22,8 @@ public class WebPanelApplication extends ResourceConfig {
         new AdminStuffService();
         
         // Adding packages (and recursives) for the rest resources
-        packages("de.minestar.Webpanel.web.resources");
+        packages("de.minestar.Webpanel.web");
+        
     }
 
 }

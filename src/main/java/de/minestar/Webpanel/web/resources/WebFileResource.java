@@ -6,8 +6,12 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 
 import org.glassfish.grizzly.http.util.MimeType;
+
+import de.minestar.Webpanel.handler.AuthHandler;
+import de.minestar.Webpanel.handler.TemplateHandler;
 
 /**
  * Webresource for file delievery lile the css or images
@@ -28,7 +32,7 @@ public class WebFileResource {
 
         // Throw 404 if not found
         if (!f.exists())
-            return Response.status(404).build();
+            return Response.status(Status.NOT_FOUND).entity(TemplateHandler.getTemplate("error404").compile(AuthHandler.defaultUser).replaceAll("web/", "")).build();
 
         // Return the file itself
         return Response.ok(f, MimeType.getByFilename(file)).build();
