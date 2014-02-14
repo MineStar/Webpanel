@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 
-import de.minestar.Webpanel.core.Webpanel;
+import de.minestar.Webpanel.core.WebpanelSettings;
 
 public class EmbeddedFile {
     // 1000 * minutes * seconds
@@ -33,11 +33,13 @@ public class EmbeddedFile {
         if (fileName.startsWith("/")) {
             fileName = fileName.replaceFirst("/", "");
         }
-        File file = new File(Webpanel.INSTANCE.getFolder() + "embeddedFiles/" + fileName);
+        File embeddedFolder = WebpanelSettings.instance().getEmbeddedFilesFolder();
+
+        File file = new File(embeddedFolder, fileName);
         if (!file.exists()) {
             fileValid = false;
-            System.out.println("[ WARNING ] File '" + Webpanel.INSTANCE.getFolder() + fileName + "' not found!");
-            return "<b>FILE '" + Webpanel.INSTANCE.getFolder() + fileName + "' NOT FOUND!</b>";
+            System.out.println("[ WARNING ] File '" + file + "' not found!");
+            return "<b>FILE '" + file + "' NOT FOUND!</b>";
         }
         try {
             String content = com.google.common.io.Files.toString(file, Charset.forName("ISO-8859-1"));
@@ -45,7 +47,7 @@ public class EmbeddedFile {
             return content;
         } catch (IOException e) {
             fileValid = false;
-            return "<b>FILE '" + Webpanel.INSTANCE.getFolder() + fileName + "' NOT LOADED!</b><br/><br/>Error:<br/>" + e.getMessage();
+            return "<b>FILE '" + file + "' NOT LOADED!</b><br/><br/>Error:<br/>" + e.getMessage();
         }
     }
 

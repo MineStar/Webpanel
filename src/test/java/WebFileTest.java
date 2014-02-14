@@ -10,6 +10,7 @@ import javax.ws.rs.core.Application;
 import org.glassfish.jersey.test.JerseyTest;
 import org.junit.Test;
 
+import de.minestar.Webpanel.core.WebpanelSettings;
 import de.minestar.Webpanel.web.WebPanelApplication;
 
 /**
@@ -19,6 +20,7 @@ public class WebFileTest extends JerseyTest {
 
     @Override
     protected Application configure() {
+        new WebpanelSettings(".");
         return new WebPanelApplication();
     }
 

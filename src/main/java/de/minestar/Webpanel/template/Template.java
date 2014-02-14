@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 
-import de.minestar.Webpanel.core.Webpanel;
+import de.minestar.Webpanel.core.WebpanelSettings;
 import de.minestar.Webpanel.handler.EmbeddedFileHandler;
 import de.minestar.Webpanel.handler.TemplateHandler;
 import de.minestar.Webpanel.units.UserData;
@@ -163,15 +163,17 @@ public class Template {
         if (templateFile.startsWith("/")) {
             templateFile = templateFile.replaceFirst("/", "");
         }
-        File file = new File(Webpanel.INSTANCE.getFolder() + "templates/" + templateFile);
+        
+        File templateFolder = WebpanelSettings.instance().getTemplateFolder();
+        File file = new File(templateFolder, templateFile);
         if (!file.exists()) {
-            System.out.println("[ WARNING ] Template '" + Webpanel.INSTANCE.getFolder() + templateFile + "' not found!");
-            return "<b>TEMPLATE '" + Webpanel.INSTANCE.getFolder() + templateFile + "' NOT FOUND!</b>";
+            System.out.println("[ WARNING ] Template '" + file + "' not found!");
+            return "<b>TEMPLATE '" + file + "' NOT FOUND!</b>";
         }
         try {
             return com.google.common.io.Files.toString(file, Charset.forName("ISO-8859-1"));
         } catch (IOException e) {
-            return "<b>TEMPLATE '" + Webpanel.INSTANCE.getFolder() + templateFile + "' NOT LOADED!</b><br/><br/>Error:<br/>" + e.getMessage();
+            return "<b>TEMPLATE '" + file + "' NOT LOADED!</b><br/><br/>Error:<br/>" + e.getMessage();
         }
     }
 
