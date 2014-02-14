@@ -1,7 +1,7 @@
             <div class="topic_switch" target="content_kick" id="content_topic">/kick</div>
             <div class="content_switch" id="content_frame" identifier="content_kick" >            
-                <form method="POST" action="AS_kickPlayer.html?username={USERNAME}&token={TOKEN}">
-			        <label class="lbl_small" for="plList"><img style="vertical-align: middle;" class="refreshPlayers" src="images/gui/btn_refresh.gif" />Spieler:</label><div class="playerlist" id="plList">{PLAYERLIST}</div>
+                <form method="POST" action="AdminStuff.html/AS_kickPlayer?username={USERNAME}&token={TOKEN}">
+			        <label class="lbl_small" for="plList"><img style="vertical-align: middle;" class="refreshPlayers" src="../web/images/gui/btn_refresh.gif" />Spieler:</label><div class="playerlist" id="plList">{PLAYERLIST}</div>
      				<label class="lbl_small" for="reason">Grund: </label><input class="txt_big" type="text" style="width: 450px;" maxlength="64" name="reason" id="reason">
         	 		<input class="btn_middle" type="submit" value="OK" />
             	</form>  
