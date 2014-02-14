@@ -2,9 +2,11 @@ package de.minestar.Webpanel.web.resources;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
@@ -16,12 +18,15 @@ import de.minestar.Webpanel.template.TemplateReplacement;
 import de.minestar.Webpanel.units.UserData;
 
 /**
- * This resource handels the doLogin.html
+ * This resource handels the authentification of user (loging and logout)
  * 
  */
 @Path("")
-public class LoginResource {
+public class AuthentifactionResource {
 
+    /**
+     * Handeling the login
+     */
     @Path("doLogin.html")
     @POST
     @Produces(MediaType.TEXT_HTML)
@@ -42,5 +47,16 @@ public class LoginResource {
         } else {
             return Response.status(Status.UNAUTHORIZED).entity(TemplateHandler.getTemplate("invalidLogin").compile(AuthHandler.defaultUser)).build();
         }
+    }
+
+    /**
+     * Handling the logout
+     */
+    @Path("logout.html")
+    @GET
+    @Produces(MediaType.TEXT_HTML)
+    public String logout(@QueryParam("username") String userName, @QueryParam("token") String token) {
+        AuthHandler.logoutUser(userName);
+        return TemplateHandler.getTemplate("logout").compile(AuthHandler.defaultUser);
     }
 }
