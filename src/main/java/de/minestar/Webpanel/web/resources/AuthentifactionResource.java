@@ -15,8 +15,8 @@ import de.minestar.Webpanel.handler.TemplateHandler;
 import de.minestar.Webpanel.template.Template;
 import de.minestar.Webpanel.template.TemplateReplacement;
 import de.minestar.Webpanel.units.UserData;
-import de.minestar.Webpanel.web.LoginCookie;
 import de.minestar.Webpanel.web.exception.UnauthorizedException;
+import de.minestar.Webpanel.web.security.LoginCookie;
 
 /**
  * This resource handels the authentification of user (loging and logout)

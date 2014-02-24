@@ -18,7 +18,7 @@ import de.minestar.Webpanel.template.TemplateReplacement;
 import de.minestar.Webpanel.units.UserData;
 import de.minestar.Webpanel.units.UserLevel;
 import de.minestar.Webpanel.utils.Helper;
-import de.minestar.Webpanel.web.LoginCookie;
+import de.minestar.Webpanel.web.security.LoginCookie;
 import de.minestar.Webpanel.web.security.NewAuthHandler;
 
 @Path("AdminStuff.html")

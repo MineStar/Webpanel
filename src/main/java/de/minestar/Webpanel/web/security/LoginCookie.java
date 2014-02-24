@@ -1,4 +1,4 @@
-package de.minestar.Webpanel.web;
+package de.minestar.Webpanel.web.security;
 
 import java.util.concurrent.TimeUnit;
 

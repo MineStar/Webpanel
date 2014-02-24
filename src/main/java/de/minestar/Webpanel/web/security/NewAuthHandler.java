@@ -3,7 +3,6 @@ package de.minestar.Webpanel.web.security;
 import de.minestar.Webpanel.handler.AuthHandler;
 import de.minestar.Webpanel.units.UserData;
 import de.minestar.Webpanel.units.UserLevel;
-import de.minestar.Webpanel.web.LoginCookie;
 import de.minestar.Webpanel.web.exception.ForbiddenException;
 import de.minestar.Webpanel.web.exception.UnauthorizedException;
 
