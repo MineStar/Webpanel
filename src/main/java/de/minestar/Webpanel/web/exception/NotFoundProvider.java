@@ -1,4 +1,4 @@
-package de.minestar.Webpanel.web;
+package de.minestar.Webpanel.web.exception;
 
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.core.Response;
