@@ -22,8 +22,8 @@ public class StartWebServiceTest {
 
     @BeforeClass
     public static void setUpStreams() {
-        // System.setOut(new PrintStream(outContent));
-        // System.setErr(new PrintStream(errContent));
+        System.setOut(new PrintStream(outContent));
+        System.setErr(new PrintStream(errContent));
     }
 
     @AfterClass
@@ -36,7 +36,7 @@ public class StartWebServiceTest {
     public void startNormal() throws IOException {
         WebService webservice = new WebService("http://localhost", 8321, ".");
         webservice.start();
-        System.in.read();
+        // System.in.read();
 
         webservice.stop();
         // No warning - all templates found
