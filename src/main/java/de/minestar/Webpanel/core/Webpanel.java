@@ -18,85 +18,51 @@
 
 package de.minestar.Webpanel.core;
 
-import java.net.InetSocketAddress;
+import java.io.IOException;
 
-import com.sun.net.httpserver.HttpServer;
-
-import de.minestar.Webpanel.handler.AuthHandler;
-import de.minestar.Webpanel.pagehandler.PageHandler;
-import de.minestar.Webpanel.services.AdminStuffService;
-import de.minestar.Webpanel.services.MainPageService;
-import de.minestar.Webpanel.services.ServerService;
-import de.minestar.Webpanel.services.TemplateService;
-import de.minestar.Webpanel.utils.ParameterFilter;
+import de.minestar.Webpanel.web.WebService;
 
 public class Webpanel {
 
-    public static Webpanel INSTANCE;
+    private WebService webservice;
 
-    // private final String folder;
-    private HttpServer server;
+    public static void main(String[] args) throws IOException {
+        Webpanel webpanel = new Webpanel();
 
-    public Webpanel(String folder, int port) throws Exception {
-        try {
-            Webpanel.INSTANCE = this;
-            // this.folder = folder;
-            System.out.println("Starting webserver @ port: " + port);
+        System.out.println("ENTER TO STOP SERVICE!");
+        System.in.read();
 
-            this.server = HttpServer.create(new InetSocketAddress(port), 0);
+        webpanel.stop();
+        System.out.println("Service stopped!");
+    }
 
-            // create mainHandler
-            PageHandler pageHandler = new PageHandler();
-            server.createContext("/", pageHandler).getFilters().add(new ParameterFilter());
+    public Webpanel() throws IOException {
+        this("http://localhost", 8000, "");
+    }
 
-            // create subHandler
-            if (!AuthHandler.init()) {
-                throw new Exception("AuthHandler not initialized!");
-            }
-            this.startUp();
+    public Webpanel(String host) throws IOException {
+        this(host, 8000, "");
+    }
 
-            // createContext
-            server.setExecutor(null);
-            server.start();
-            System.out.println("Webserver started @ port: " + port);
-        } catch (Exception e) {
-            System.out.println("ERROR: could not start server @ port: " + port);
-            e.printStackTrace();
-            this.server = null;
-            throw e;
+    public Webpanel(String host, int port) throws IOException {
+        this(host, port, "");
+    }
+
+    public Webpanel(String host, int port, String folder) throws IOException {
+        if (folder.length() < 1) {
+            folder = ".";
         }
-    }
-
-    private void startUp() {
-        new TemplateService();
-        new MainPageService();
-        new ServerService();
-        new AdminStuffService();
-    }
-
-    public HttpServer getServer() {
-        return server;
+        this.webservice = new WebService(host, port, folder);
+        this.webservice.start();
     }
 
     public boolean isRunning() {
-        return this.server != null;
+        return this.webservice != null;
     }
 
     public void stop() {
         if (this.isRunning()) {
-            this.server.stop(0);
+            this.webservice.stop();
         }
     }
-
-    public static void main(String[] args) {
-        try {
-            new Webpanel("", 8000);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    // public String getFolder() {
-    // return folder;
-    // }
 }
