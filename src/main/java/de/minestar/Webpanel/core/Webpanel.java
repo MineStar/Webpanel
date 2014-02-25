@@ -34,13 +34,13 @@ public class Webpanel {
 
     public static Webpanel INSTANCE;
 
-//    private final String folder;
+    // private final String folder;
     private HttpServer server;
 
     public Webpanel(String folder, int port) throws Exception {
         try {
             Webpanel.INSTANCE = this;
-//            this.folder = folder;
+            // this.folder = folder;
             System.out.println("Starting webserver @ port: " + port);
 
             this.server = HttpServer.create(new InetSocketAddress(port), 0);
@@ -96,7 +96,7 @@ public class Webpanel {
         }
     }
 
-//    public String getFolder() {
-//        return folder;
-//    }
+    // public String getFolder() {
+    // return folder;
+    // }
 }

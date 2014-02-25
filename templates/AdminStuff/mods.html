@@ -1,10 +1,8 @@
-            <div class="topic_switch" target="content_kick" id="content_topic">/kick</div>
-            <div class="content_switch" id="content_frame" identifier="content_kick" >            
-                <form method="POST" action="AdminStuff.html/AS_kickPlayer?username={USERNAME}&token={TOKEN}">
-			        <label class="lbl_small" for="plList"><img style="vertical-align: middle;" class="refreshPlayers" src="../web/images/gui/btn_refresh.gif" />Spieler:</label><div class="playerlist" id="plList">{PLAYERLIST}</div>
-     				<label class="lbl_small" for="reason">Grund: </label><input class="txt_big" type="text" style="width: 450px;" maxlength="64" name="reason" id="reason">
-        	 		<input class="btn_middle" type="submit" value="OK" />
-            	</form>  
-            	<NOELEMENT style="clear:both;">         	
+            <h3>Kick</h3>
+            <div>
+                <form name="kick" url="kickPlayer.html" message="Spieler wird gekickt..." onSuccess="onKickSuccess" onError="onKickError">
+                    <label class="lbl_small" for="playerName">Spielername: </label><input class="txt_big" value="" name="playerName">
+                    <label class="lbl_small" for="reason">Grund: </label><input class="txt_big" value="" name="reason">
+                </form> 
+                <button class="button btn_middle" type="postRequest" target="kick">Kicken</button>
             </div>
-            <div id="content_spacer"></div>

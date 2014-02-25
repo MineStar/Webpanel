@@ -15,15 +15,15 @@ public class WebPanelApplication extends ResourceConfig {
 
     public WebPanelApplication() {
         AuthHandler.init();
-        
+
         new TemplateService();
         new MainPageService();
         new ServerService();
         new AdminStuffService();
-        
+
         // Adding packages (and recursives) for the rest resources
         packages("de.minestar.Webpanel.web");
-        
+
     }
 
 }

@@ -163,7 +163,7 @@ public class Template {
         if (templateFile.startsWith("/")) {
             templateFile = templateFile.replaceFirst("/", "");
         }
-        
+
         File templateFolder = WebpanelSettings.instance().getTemplateFolder();
         File file = new File(templateFolder, templateFile);
         if (!file.exists()) {

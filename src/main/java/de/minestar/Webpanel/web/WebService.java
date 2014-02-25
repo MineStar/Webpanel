@@ -17,7 +17,7 @@ public class WebService {
 
     public WebService(String baseURI, int port, String folder) {
         new WebpanelSettings(folder);
-        
+
         URI restURI = UriBuilder.fromUri(baseURI).port(port).build();
         ResourceConfig config = new WebPanelApplication();
         this.webServer = GrizzlyHttpServerFactory.createHttpServer(restURI, config);

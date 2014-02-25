@@ -2,6 +2,15 @@
             <div id="content_spacer"></div>
             <div id="content_plugin_topic">AdminStuff</div>            
             <div id="content_spacer"></div>
-            {TEMPLATE:as_mods:[USERLEVEL:MOD]}
-            {TEMPLATE:as_admins:=[USERLEVEL:ADMIN]}
+            
+            <div class="ui-widget content_element_width">
+	            <div type="ajaxResponse" class="ui-state-error ui-corner-all" style="padding: 0 .7em;"></div>
+       		 </div>
+            <div id="content_spacer"></div>
+            
+            <div id="accordion" class="content_element_width">
+            	{TEMPLATE:as_mods:[USERLEVEL:MOD]}
+            	{TEMPLATE:as_admins:=[USERLEVEL:ADMIN]}
+            </div>
+            <div id="content_spacer"></div>
 {FILE:footer.html}

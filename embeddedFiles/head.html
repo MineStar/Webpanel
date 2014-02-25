@@ -1,44 +1,12 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="de">
 <head>
-    <link rel="stylesheet" media="all" href="web/styles.css">
-    <script src="web/scripts/jquery-2.1.0.js" type="text/javascript"></script>
-    <script>   	
-        $(document).ready(function() {         	 
-		    ////////////////////////////////////////////////////
-            //
-            // MAIN-METHODS
-            //
-            //////////////////////////////////////////////////// 
-            		        	     	
-	  		function hideAll() {            
-		        $(".content_switch").hide();  
-		    }  
-		    
-		    function showContent(targetName) {  
-		    	hideAll();    
-		    	var $value = '[identifier="' + targetName + '"]';
-		        $($value).show();
-		    } 
-		    
-		    ////////////////////////////////////////////////////
-            //
-            // PAGE-SPECIFIC
-            //
-            ////////////////////////////////////////////////////
-            $(".topic_switch").click(function(){
-            	showContent($(this).attr("target")); 
-            });
-            
-            $(".refreshPlayers").click(function(){
-			  $.post("getOnlinePlayers.html?username={USERNAME}&token={TOKEN}",function(data,status){
-			  	$(".playerlist").html(data);
-			  });
-			});
-			
-			hideAll();
-        });
-    </script>    
+	<link href="web/css/custom.css" rel="stylesheet">
+    <link href="web/styles.css" rel="stylesheet">
+    <script src="web/scripts/jquery/jquery-1.10.2.js"></script>
+    <script src="web/scripts/jquery/jquery-ui-1.10.4.custom.js"></script>      
+    <script src="web/scripts/Main.js"></script>
+    <script src="web/scripts/AdminStuff.js"></script>
 </head>
 <body>
     <div id="wrap">
