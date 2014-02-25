@@ -15,7 +15,7 @@ public class TemplateHandler {
         if (!hasTemplate(name)) {
             return Template.emptyTemplate();
         } else {
-            return templateMap.get(name);
+            return templateMap.get(name).clone();
         }
     }
 

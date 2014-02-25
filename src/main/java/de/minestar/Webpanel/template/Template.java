@@ -3,6 +3,9 @@ package de.minestar.Webpanel.template;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 import de.minestar.Webpanel.core.WebpanelSettings;
 import de.minestar.Webpanel.handler.EmbeddedFileHandler;
@@ -11,10 +14,11 @@ import de.minestar.Webpanel.units.UserData;
 import de.minestar.Webpanel.units.UserLevel;
 
 public class Template {
-    protected final String name;
+    protected String name;
     protected String string;
 
     private static Template emptyTemplate = new Template();
+    private Map<String, TemplateReplacement> replacementList = null;
 
     public static Template emptyTemplate() {
         return emptyTemplate;
@@ -31,6 +35,14 @@ public class Template {
     }
 
     public String compile(UserData userData, TemplateReplacement... args) {
+        String answer = this.compile(userData);
+        for (TemplateReplacement arg : args) {
+            answer = answer.replaceAll(arg.getName(), arg.getValue());
+        }
+        return answer;
+    }
+
+    public String compile(UserData userData, Collection<TemplateReplacement> args) {
         String answer = this.compile(userData);
         for (TemplateReplacement arg : args) {
             answer = answer.replaceAll(arg.getName(), arg.getValue());
@@ -183,5 +195,67 @@ public class Template {
 
     public String getString() {
         return string;
+    }
+
+    public Template clone() {
+        Template template = new Template();
+        template.name = this.name;
+        template.string = this.string;
+        return template;
+    }
+
+    /**
+     * Add a TemplateReplacement to this template
+     * 
+     * @param name
+     * @param value
+     * @return this
+     */
+    public Template set(String name, String value) {
+        name = name.toUpperCase();
+        if (this.replacementList == null) {
+            this.replacementList = new HashMap<String, TemplateReplacement>();
+        }
+        TemplateReplacement replacement = this.replacementList.get(name);
+        if (replacement == null) {
+            replacement = new TemplateReplacement(name, value);
+        }
+        this.replacementList.put(name, replacement);
+        return this;
+    }
+
+    /**
+     * Remove a TemplateReplacement from this Template
+     * 
+     * @param name
+     * @return this
+     */
+    public Template remove(String name) {
+        name = name.toUpperCase();
+        if (this.replacementList != null) {
+            this.replacementList.remove(name);
+            if (this.replacementList.size() < 1) {
+                this.replacementList = null;
+            }
+        }
+        return this;
+    }
+
+    public String build(UserData userData) {
+        if (this.replacementList == null) {
+            return this.compile(userData);
+        } else {
+            return this.compile(userData, this.replacementList.values());
+        }
+    }
+
+    /**
+     * Get a fresh copy of this Template. Used to build the template.
+     * 
+     * @param templateName
+     * @return
+     */
+    public static Template get(String templateName) {
+        return TemplateHandler.getTemplate(templateName);
     }
 }
