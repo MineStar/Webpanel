@@ -13,7 +13,7 @@ import de.minestar.Webpanel.services.TemplateService;
  */
 public class WebPanelApplication extends ResourceConfig {
 
-    public WebPanelApplication() {
+    public WebPanelApplication(String packageFolder) {
         AuthHandler.init();
 
         new TemplateService();
@@ -22,8 +22,7 @@ public class WebPanelApplication extends ResourceConfig {
         new AdminStuffService();
 
         // Adding packages (and recursives) for the rest resources
-        packages("de.minestar.Webpanel.web");
-
+        packages(packageFolder);
     }
 
 }

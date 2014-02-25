@@ -18,12 +18,18 @@ public class WebpanelSettings {
         this.templateFolder = new File(pluginFolder, "templates");
         this.webFolder = new File(pluginFolder, "web");
         this.embeddedFilesFolder = new File(pluginFolder, "embeddedFiles");
+        this.packageFolder = "de.minestar.Webpanel.web";
     }
 
     private File pluginFolder;
     private File webFolder;
     private File templateFolder;
     private File embeddedFilesFolder;
+    private String packageFolder;
+
+    public String getPackageFolder() {
+        return packageFolder;
+    }
 
     public File getPluginFolder() {
         return pluginFolder;

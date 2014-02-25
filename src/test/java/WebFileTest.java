@@ -20,8 +20,8 @@ public class WebFileTest extends JerseyTest {
 
     @Override
     protected Application configure() {
-        new WebpanelSettings(".");
-        return new WebPanelApplication();
+        WebpanelSettings settings = new WebpanelSettings(".");
+        return new WebPanelApplication(settings.getPackageFolder());
     }
 
     @Test
@@ -35,7 +35,6 @@ public class WebFileTest extends JerseyTest {
     public void loadNotExistingImage() {
         // Access a resource not existing - expect 404
         target("web").path("images/gui/btn_refresh.gi").request().get(File.class);
-
     }
 
     @Test
@@ -47,7 +46,7 @@ public class WebFileTest extends JerseyTest {
 
     @Test
     public void loadJqueryFile() {
-        String jqueryContent = target("web").path("scripts/jquery-2.1.0.js").request().get(String.class);
+        String jqueryContent = target("web").path("scripts/jquery/jquery-1.10.2.js").request().get(String.class);
         assertNotNull(jqueryContent);
         assertFalse(jqueryContent.isEmpty());
     }

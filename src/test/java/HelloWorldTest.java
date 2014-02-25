@@ -17,9 +17,8 @@ public class HelloWorldTest extends JerseyTest {
 
     @Override
     protected Application configure() {
-        new WebpanelSettings(".");
-        return new WebPanelApplication();
-
+        WebpanelSettings settings = new WebpanelSettings(".");
+        return new WebPanelApplication(settings.getPackageFolder());
     }
 
     @Test
