@@ -1,8 +1,6 @@
-package de.minestar.Webpanel.handler;
+package de.minestar.Webpanel.template;
 
 import java.util.concurrent.ConcurrentHashMap;
-
-import de.minestar.Webpanel.template.Template;
 
 public class TemplateHandler {
     private static ConcurrentHashMap<String, Template> templateMap = new ConcurrentHashMap<String, Template>();
@@ -11,7 +9,7 @@ public class TemplateHandler {
         return templateMap.containsKey(name);
     }
 
-    public static Template getTemplate(String name) {
+    protected static Template getTemplate(String name) {
         if (!hasTemplate(name)) {
             return Template.emptyTemplate();
         } else {

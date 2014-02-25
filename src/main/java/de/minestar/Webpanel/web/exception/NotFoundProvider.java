@@ -5,8 +5,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
-import de.minestar.Webpanel.handler.AuthHandler;
-import de.minestar.Webpanel.handler.TemplateHandler;
+import de.minestar.Webpanel.template.Template;
 
 /**
  * Class handeling all 404 errors thrown by webserver
@@ -15,6 +14,6 @@ import de.minestar.Webpanel.handler.TemplateHandler;
 public class NotFoundProvider implements ExceptionMapper<NotFoundException> {
 
     public Response toResponse(NotFoundException exception) {
-        return Response.status(Response.Status.NOT_FOUND).entity(TemplateHandler.getTemplate("error404").compile(AuthHandler.defaultUser)).build();
+        return Response.status(Response.Status.NOT_FOUND).entity(Template.get("error404").build()).build();
     }
 }

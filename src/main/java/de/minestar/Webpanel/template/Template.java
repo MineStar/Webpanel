@@ -8,8 +8,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import de.minestar.Webpanel.core.WebpanelSettings;
+import de.minestar.Webpanel.handler.AuthHandler;
 import de.minestar.Webpanel.handler.EmbeddedFileHandler;
-import de.minestar.Webpanel.handler.TemplateHandler;
 import de.minestar.Webpanel.units.UserData;
 import de.minestar.Webpanel.units.UserLevel;
 
@@ -19,6 +19,7 @@ public class Template {
 
     private static Template emptyTemplate = new Template();
     private Map<String, TemplateReplacement> replacementList = null;
+    private UserData userData = AuthHandler.defaultUser;
 
     public static Template emptyTemplate() {
         return emptyTemplate;
@@ -34,7 +35,7 @@ public class Template {
         this.string = this.loadTemplate(templateFile);
     }
 
-    public String compile(UserData userData, TemplateReplacement... args) {
+    private String compile(UserData userData, Collection<TemplateReplacement> args) {
         String answer = this.compile(userData);
         for (TemplateReplacement arg : args) {
             answer = answer.replaceAll(arg.getName(), arg.getValue());
@@ -42,15 +43,7 @@ public class Template {
         return answer;
     }
 
-    public String compile(UserData userData, Collection<TemplateReplacement> args) {
-        String answer = this.compile(userData);
-        for (TemplateReplacement arg : args) {
-            answer = answer.replaceAll(arg.getName(), arg.getValue());
-        }
-        return answer;
-    }
-
-    public String compile(UserData userData) {
+    private String compile(UserData userData) {
         return compile(this, userData, 0);
     }
 
@@ -241,12 +234,21 @@ public class Template {
         return this;
     }
 
-    public String build(UserData userData) {
+    public String build() {
         if (this.replacementList == null) {
-            return this.compile(userData);
+            return this.compile(this.userData);
         } else {
-            return this.compile(userData, this.replacementList.values());
+            return this.compile(this.userData, this.replacementList.values());
         }
+    }
+
+    public Template setUser(UserData userData) {
+        if (userData == null) {
+            this.userData = AuthHandler.defaultUser;
+        } else {
+            this.userData = userData;
+        }
+        return this;
     }
 
     /**

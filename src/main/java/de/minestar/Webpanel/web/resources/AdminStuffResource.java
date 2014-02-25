@@ -13,7 +13,7 @@ import javax.ws.rs.core.Response;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-import de.minestar.Webpanel.handler.TemplateHandler;
+import de.minestar.Webpanel.template.Template;
 import de.minestar.Webpanel.template.TemplateReplacement;
 import de.minestar.Webpanel.units.UserData;
 import de.minestar.Webpanel.units.UserLevel;
@@ -36,15 +36,17 @@ public class AdminStuffResource {
         UserData user = NewAuthHandler.check(cookie, UserLevel.MOD);
 
         TemplateReplacement rpl_playerList = new TemplateReplacement("PLAYERLIST");
-        TemplateReplacement rpl_user = new TemplateReplacement("USERNAME", user.getUserName());
-        TemplateReplacement rpl_token = new TemplateReplacement("TOKEN", user.getToken());
+
         if (Bukkit.getServer() != null) {
             rpl_playerList.setValue(Helper.StringToDropDown("player", this.getPlayerList(), ";", "dropdown_big"));
         } else {
             rpl_playerList.setValue("Server ist offline!");
             rpl_playerList.setValue("GeMoschen!");
         }
-        return Response.ok(TemplateHandler.getTemplate("AdminStuff").compile(user, rpl_playerList, rpl_user, rpl_token)).build();
+
+        Template template = Template.get("AdminStuff").set(rpl_playerList.getName(), rpl_playerList.getValue());
+        template = template.setUser(user);
+        return Response.ok(template.build()).build();
     }
 
     private String getPlayerList() {

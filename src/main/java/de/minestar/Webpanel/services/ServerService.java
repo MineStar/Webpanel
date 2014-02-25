@@ -1,8 +1,5 @@
 package de.minestar.Webpanel.services;
 
-import de.minestar.Webpanel.pagehandler.main.ChatPageHandler;
-import de.minestar.Webpanel.pagehandler.main.GetOnlinePlayersPageHandler;
-
 public class ServerService extends RegisterService {
 
     @Override
@@ -14,7 +11,5 @@ public class ServerService extends RegisterService {
     @Override
     protected void registerPages() {
         // register server-pages
-        this.registerPage(new ChatPageHandler(), "/chat.html");
-        this.registerPage(new GetOnlinePlayersPageHandler(), "/getOnlinePlayers.html");
     }
 }

@@ -11,9 +11,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import de.minestar.Webpanel.handler.AuthHandler;
-import de.minestar.Webpanel.handler.TemplateHandler;
 import de.minestar.Webpanel.template.Template;
-import de.minestar.Webpanel.template.TemplateReplacement;
 import de.minestar.Webpanel.units.UserData;
 import de.minestar.Webpanel.web.exception.UnauthorizedException;
 import de.minestar.Webpanel.web.security.LoginCookie;
@@ -35,18 +33,9 @@ public class AuthentifactionResource {
     public Response login(@FormParam("txt_username") String userName, @FormParam("txt_password") String password) {
         if (userName != null && password != null && AuthHandler.doLogin(userName, password)) {
             // get userdata
-            UserData user = AuthHandler.getUser(userName);
-
-            Template template = TemplateHandler.getTemplate("doLogin");
-            TemplateReplacement rpl_user = new TemplateReplacement("USERNAME");
-            TemplateReplacement rpl_token = new TemplateReplacement("TOKEN");
-
-            // update replacements...
-            rpl_user.setValue(userName);
-            rpl_token.setValue(user.getToken());
-            String token = user.getToken();
-
-            return Response.ok(template.compile(user, rpl_user, rpl_token)).cookie(LoginCookie.createNew(userName, token)).build();
+            UserData userData = AuthHandler.getUser(userName);
+            Template template = Template.get("doLogin").set("USERNAME", userData.getUserName()).set("TOKEN", userData.getToken()).setUser(userData);
+            return Response.ok(template.build()).cookie(LoginCookie.createNew(userData.getUserName(), userData.getToken())).build();
         } else {
             throw new UnauthorizedException();
         }
@@ -59,7 +48,6 @@ public class AuthentifactionResource {
     @GET
     @Produces(MediaType.TEXT_HTML)
     public Response logout(@CookieParam(LoginCookie.COOKIE_NAME) LoginCookie cookie) {
-
-        return Response.ok(TemplateHandler.getTemplate("logout").compile(AuthHandler.defaultUser)).cookie(LoginCookie.delete(cookie)).build();
+        return Response.ok(Template.get("logout").build()).cookie(LoginCookie.delete(cookie)).build();
     }
 }

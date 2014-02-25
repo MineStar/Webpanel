@@ -5,7 +5,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import de.minestar.Webpanel.handler.AuthHandler;
-import de.minestar.Webpanel.handler.TemplateHandler;
+import de.minestar.Webpanel.template.Template;
 import de.minestar.Webpanel.units.UserData;
 
 public class ForbiddenException extends WebApplicationException {
@@ -17,6 +17,6 @@ public class ForbiddenException extends WebApplicationException {
     }
 
     public ForbiddenException(UserData user) {
-        super(Response.status(Status.FORBIDDEN).entity(TemplateHandler.getTemplate("insufficentRights").compile(user)).build());
+        super(Response.status(Status.FORBIDDEN).entity(Template.get("insufficentRights").setUser(user).build()).build());
     }
 }
