@@ -21,9 +21,15 @@ import de.minestar.Webpanel.utils.Helper;
 import de.minestar.Webpanel.web.security.LoginCookie;
 import de.minestar.Webpanel.web.security.NewAuthHandler;
 
+/**
+ * The resource for the Plugin AdminStuff
+ */
 @Path("AdminStuff.html")
 public class AdminStuffResource {
 
+    /**
+     * Main method - show the menu
+     */
     @GET
     @Produces(MediaType.TEXT_HTML)
     public Response clickAdminStuff(@CookieParam(LoginCookie.COOKIE_NAME) LoginCookie cookie) {

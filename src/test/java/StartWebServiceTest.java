@@ -11,6 +11,9 @@ import org.junit.Test;
 
 import de.minestar.Webpanel.web.WebService;
 
+/**
+ * Test to start the webservice with all its neccessary information
+ */
 public class StartWebServiceTest {
 
     // Write the standard output channels to a string
