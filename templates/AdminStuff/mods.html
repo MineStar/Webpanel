@@ -1,8 +1,11 @@
-            <h3>Kick</h3>
+			<h3>Kick</h3>
             <div>
-                <form name="kick" url="kickPlayer.html" message="Spieler wird gekickt..." onSuccess="onKickSuccess" onError="onKickError">
+                <form name="kick" url="kick.php" message="Spieler wird gekickt..." onSuccess="onKickSuccess" onError="onKickError">
                     <label class="lbl_small" for="playerName">Spielername: </label><input class="txt_big" value="" name="playerName">
                     <label class="lbl_small" for="reason">Grund: </label><input class="txt_big" value="" name="reason">
-                </form> 
-                <button class="button btn_middle" type="postRequest" target="kick">Kicken</button>
+                </form>  
+                <div class="div_wrapper">
+                    <div class="div_button"><button class="button btn_middle" type="postRequest" target="kick" responseField="kickResponse">Kicken</button></div>
+                    <div class="div_status" name="kickResponse"></div>
+                </div>
             </div>

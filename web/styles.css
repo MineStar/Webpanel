@@ -170,13 +170,6 @@ body, html {
     color: #ffffff;
 }
 
-.content_element_width {
-    width: 698px;
-    margin-left: auto;
-    margin-right: auto;    
-    text-align: left;
-}
-
 #content_topic {
     margin-top: 20px;
     margin-bottom: 5px;
@@ -263,8 +256,35 @@ body, html {
 .btn_middle {   
     clear: both;
     margin: auto;
-    width: 158px;
+    width: 176px;
     display: block;
     vertical-align: middle;
-    height: 25px;
+    height: 24px;
+}
+
+.div_wrapper{
+    clear: both;
+    width: 205px;
+    height: 24px;
+    margin: 0px auto;
+}
+
+.div_status {
+    width: 24px;
+    height: 24px;
+    float: left;
+    margin-right: 5px;
+}
+
+.div_button {
+    width: 176px;
+    height: 24px;
+    float: right;
+}
+
+.content_element_width {
+    width: 698px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;
 }

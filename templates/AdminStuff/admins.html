@@ -1,8 +1,11 @@
            	<h3>Bann</h3>
             <div>
-                <form name="ban" url="banPlayer.html" message="Spieler wird gebannt..." onSuccess="onBanSuccess" onError="onBanError" showResponse="false">
+                <form name="ban" url="banPlayer.html" message="Spieler wird gebannt..." onSuccess="onBanSuccess" onError="onBanError">
                     <label class="lbl_small" for="playerName">Spielername: </label><input class="txt_big" value="" name="playerName">
                     <label class="lbl_small" for="reason">Grund: </label><input class="txt_big" value="" name="reason">
                 </form>
-                <button class="button btn_middle" type="postRequest" target="ban">Bannen</button>
+                <div class="div_wrapper">
+                    <div class="div_button"><button class="button btn_middle" type="postRequest" target="ban" responseField="banResponse">Bannen</button></div>
+                    <div class="div_status" name="banResponse"></div>
+                </div>
             </div>
