@@ -22,13 +22,13 @@ function updateResponseDIV($target, $type) {
         return;
     }
     if($type == 0) {
-        $target.html('<img src="web/images/status_working.gif">');
+        $target.html('<img src="images/status_working.gif">');
     } else if($type == 1) {
-        $target.html('<img src="web/images/status_fine.png">');
+        $target.html('<img src="images/status_fine.png">');
     } else if($type == -1) {
-        $target.html('<img src="web/images/status_error.png">');
+        $target.html('<img src="images/status_error.png">');
     } else if($type == -2) {
-        $target.html('<img src="web/images/status_undefined.png">');
+        $target.html('<img src="images/status_undefined.png">');
     }
 }
 

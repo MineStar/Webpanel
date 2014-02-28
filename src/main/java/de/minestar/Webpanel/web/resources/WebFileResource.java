@@ -19,15 +19,14 @@ import de.minestar.Webpanel.template.Template;
 public class WebFileResource {
 
     // directory for the web files
-    private static final File webFiles = new File("web");
+    private static final File webFolder = new File("web");
 
     // The :.+ is for matchin also slashes
     @Path("{file:.+}")
     @GET
     public Response getContent(@PathParam("file") String file) {
-
         // Load file
-        File f = new File(webFiles, file);
+        File f = new File(webFolder, file);
 
         // Throw 404 if not found
         if (!f.exists())
