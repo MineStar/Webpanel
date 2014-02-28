@@ -1,5 +1,6 @@
 package de.minestar.Webpanel.web;
 
+import org.glassfish.jersey.jackson.JacksonFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 
 import de.minestar.Webpanel.handler.AuthHandler;
@@ -22,7 +23,7 @@ public class WebPanelApplication extends ResourceConfig {
         new AdminStuffService();
 
         // Adding packages (and recursives) for the rest resources
-        packages(packageFolder);
+        packages(packageFolder).register(JacksonFeature.class);
     }
 
 }

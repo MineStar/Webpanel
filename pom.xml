@@ -54,6 +54,11 @@
 			<version>2.5.1</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.glassfish.jersey.media</groupId>
+			<artifactId>jersey-media-json-jackson</artifactId>
+			<version>2.6</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -72,6 +77,7 @@
 					<artifactSet>
 						<includes>
 							<include>org.glassfish.jersey.containers:*</include>
+							<include>org.glassfish.jersey.media:*</include>
 						</includes>
 					</artifactSet>
 				</configuration>

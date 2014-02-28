@@ -53,9 +53,9 @@ public class AdminStuffResource {
     @Path("kickPlayer")
     @Produces(MediaType.TEXT_PLAIN)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response clickKickPlayer(String json, @CookieParam(LoginCookie.COOKIE_NAME) LoginCookie cookie) {
+    public Response clickKickPlayer(KickJSON json, @CookieParam(LoginCookie.COOKIE_NAME) LoginCookie cookie) {
         UserData user = NewAuthHandler.check(cookie, UserLevel.MOD);
-        System.out.println("payload: " + json);
+        System.out.println("payload: " + json.getPlayerName() + " - " + json.getReason());
         // Handle kick
         String testResponse = "{'status':200, 'playerName':'testkickuser'}";
         testResponse = testResponse.replaceAll("'", "\"");
