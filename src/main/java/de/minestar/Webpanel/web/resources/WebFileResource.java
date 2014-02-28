@@ -29,8 +29,9 @@ public class WebFileResource {
         File f = new File(webFolder, file);
 
         // Throw 404 if not found
-        if (!f.exists())
+        if (!f.exists()) {
             return Response.status(Status.NOT_FOUND).entity(Template.get("error404").build().replaceAll("web/", "")).build();
+        }
 
         // Return the file itself
         return Response.ok(f, MimeType.getByFilename(file)).build();

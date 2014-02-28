@@ -144,10 +144,11 @@ $(document).ready(function() {
             requestPossible = 0;
             updateResponseDIV($responseField, 0);
             setHoverText($responseField, message);
-            
+                        
             // disable buttons
             disableAllElementsOfType(".button");
             
+            console.log(jsonData);
             /////////////////////////////////////////////////////////////
             // send a POST-Request with ajax                        
             $.ajax({

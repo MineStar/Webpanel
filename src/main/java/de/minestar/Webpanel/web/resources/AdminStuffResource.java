@@ -11,20 +11,17 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 
 import de.minestar.Webpanel.template.Template;
-import de.minestar.Webpanel.template.TemplateReplacement;
 import de.minestar.Webpanel.units.UserData;
 import de.minestar.Webpanel.units.UserLevel;
-import de.minestar.Webpanel.utils.Helper;
 import de.minestar.Webpanel.web.security.LoginCookie;
 import de.minestar.Webpanel.web.security.NewAuthHandler;
 
 /**
  * The resource for the Plugin AdminStuff
  */
-@Path("AdminStuff.html")
+@Path("AdminStuff")
 public class AdminStuffResource {
 
     /**
@@ -35,41 +32,37 @@ public class AdminStuffResource {
     public Response clickAdminStuff(@CookieParam(LoginCookie.COOKIE_NAME) LoginCookie cookie) {
         UserData user = NewAuthHandler.check(cookie, UserLevel.MOD);
 
-        TemplateReplacement rpl_playerList = new TemplateReplacement("PLAYERLIST");
+        // TemplateReplacement rpl_playerList = new
+        // TemplateReplacement("PLAYERLIST");
 
         if (Bukkit.getServer() != null) {
-            rpl_playerList.setValue(Helper.StringToDropDown("player", this.getPlayerList(), ";", "dropdown_big"));
+            // rpl_playerList.setValue(Helper.StringToDropDown("player",
+            // this.getPlayerList(), ";", "dropdown_big"));
         } else {
-            rpl_playerList.setValue("Server ist offline!");
-            rpl_playerList.setValue("GeMoschen!");
+            // rpl_playerList.setValue("Server ist offline!");
+            // rpl_playerList.setValue("GeMoschen!");
         }
 
-        Template template = Template.get("AdminStuff").set(rpl_playerList.getName(), rpl_playerList.getValue());
+        Template template = Template.get("AdminStuff"); // .set(rpl_playerList.getName(),
+                                                        // rpl_playerList.getValue());
         template = template.setUser(user);
         return Response.ok(template.build()).build();
     }
 
-    private String getPlayerList() {
-        // build response
-        String response = "";
-        Player[] list = Bukkit.getOnlinePlayers();
-        for (Player player : list) {
-            response += player.getName() + ";";
-        }
-        return response;
-    }
-
-    @Path("AS_kickPlayer")
     @POST
-    @Produces(MediaType.TEXT_HTML)
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    public Response clickKickPlayer(@FormParam("player") String userToKick, @FormParam("reason") String reason, @CookieParam(LoginCookie.COOKIE_NAME) LoginCookie cookie) {
-
+    @Path("kickPlayer")
+    @Produces(MediaType.TEXT_PLAIN)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response clickKickPlayer(String json, @CookieParam(LoginCookie.COOKIE_NAME) LoginCookie cookie) {
+        UserData user = NewAuthHandler.check(cookie, UserLevel.MOD);
+        System.out.println("payload: " + json);
         // Handle kick
-        return clickAdminStuff(cookie);
+        String testResponse = "{'status':200, 'playerName':'testkickuser'}";
+        testResponse = testResponse.replaceAll("'", "\"");
+        return Response.ok(testResponse).build();
     }
 
-    @Path("AS_banPlayer")
+    @Path("banPlayer")
     @POST
     @Produces(MediaType.TEXT_HTML)
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
@@ -86,6 +79,6 @@ public class AdminStuffResource {
     public Response clickGodPlayer(@FormParam("player") String userToKick, @CookieParam(LoginCookie.COOKIE_NAME) LoginCookie cookie) {
 
         // Handle godmode
-        return clickAdminStuff(cookie);
+        return Response.ok("okay!").build();
     }
 }

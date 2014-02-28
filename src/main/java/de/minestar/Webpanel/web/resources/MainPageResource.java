@@ -56,4 +56,5 @@ public class MainPageResource {
         // Deliver the login page if not logged in or wrong cookie
         return Response.ok(Template.get("login").build()).build();
     }
+
 }
