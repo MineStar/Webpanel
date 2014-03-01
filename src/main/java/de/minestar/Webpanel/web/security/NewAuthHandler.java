@@ -1,5 +1,7 @@
 package de.minestar.Webpanel.web.security;
 
+import javax.ws.rs.core.UriInfo;
+
 import de.minestar.Webpanel.handler.AuthHandler;
 import de.minestar.Webpanel.units.UserData;
 import de.minestar.Webpanel.units.UserLevel;
@@ -32,8 +34,8 @@ public class NewAuthHandler {
      *             When the user want to access a resource he hasn't the
      *             permission level for.
      */
-    public static UserData check(LoginCookie cookie) throws UnauthorizedException, ForbiddenException {
-        return check(cookie, UserLevel.DEFAULT);
+    public static UserData check(UriInfo uriInfo, LoginCookie cookie) throws UnauthorizedException, ForbiddenException {
+        return check(uriInfo, cookie, UserLevel.DEFAULT);
     }
 
     /**
@@ -57,13 +59,13 @@ public class NewAuthHandler {
      *             When the user want to access a resource he hasn't the
      *             permission level for
      */
-    public static UserData check(LoginCookie cookie, UserLevel level) throws UnauthorizedException, ForbiddenException {
+    public static UserData check(UriInfo uriInfo, LoginCookie cookie, UserLevel level) throws UnauthorizedException, ForbiddenException {
 
         if (cookie == null) {
-            throw new UnauthorizedException();
+            throw new UnauthorizedException(uriInfo);
         }
         if (!AuthHandler.isUserLoginValid(cookie.getUserName(), cookie.getToken())) {
-            throw new UnauthorizedException();
+            throw new UnauthorizedException(uriInfo);
         }
 
         UserData user = AuthHandler.getUser(cookie.getUserName());

@@ -7,6 +7,10 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.ws.rs.core.UriInfo;
+
+import org.apache.commons.lang.StringUtils;
+
 import de.minestar.Webpanel.core.WebpanelSettings;
 import de.minestar.Webpanel.handler.AuthHandler;
 import de.minestar.Webpanel.handler.EmbeddedFileHandler;
@@ -264,6 +268,16 @@ public class Template {
             this.relativeFolder = relativeFolder;
         }
         return this;
+    }
+
+    public Template setRelativeFolder(UriInfo uriInfo) {
+        // retrieve the relative folder
+        int countSlashes = StringUtils.countMatches(uriInfo.getPath(), "/");
+        String relativeFolder = "";
+        for (int count = 1; count < countSlashes; count++) {
+            relativeFolder += "../";
+        }
+        return this.setRelativeFolder(relativeFolder);
     }
 
     /**

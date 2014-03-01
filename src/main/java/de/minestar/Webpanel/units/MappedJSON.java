@@ -1,4 +1,4 @@
-package de.minestar.Webpanel.web.resources;
+package de.minestar.Webpanel.units;
 
 import java.util.HashMap;
 
