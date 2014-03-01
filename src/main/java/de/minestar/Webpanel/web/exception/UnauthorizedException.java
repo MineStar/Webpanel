@@ -19,4 +19,5 @@ public class UnauthorizedException extends WebApplicationException {
     public UnauthorizedException(UserData user) {
         super(Response.status(Status.UNAUTHORIZED).entity(Template.get("invalidLogin").setUser(user).build()).build());
     }
+
 }

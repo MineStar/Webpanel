@@ -20,6 +20,7 @@ public class Template {
     private static Template emptyTemplate = new Template();
     private Map<String, TemplateReplacement> replacementList = null;
     private UserData userData = AuthHandler.defaultUser;
+    private String relativeFolder = "";
 
     public static Template emptyTemplate() {
         return emptyTemplate;
@@ -56,7 +57,12 @@ public class Template {
         text = searchEmbeddedFiles(text);
         text = replaceUserLevels(text);
         text = searchTemplates(text, userData, depth);
+        text = replaceRelativeFolder(text);
         return text;
+    }
+
+    private String replaceRelativeFolder(String text) {
+        return text.replaceAll("\\{RELATIVE_FOLDER\\}", this.relativeFolder);
     }
 
     private String replaceUserLevels(String text) {
@@ -247,6 +253,15 @@ public class Template {
             this.userData = AuthHandler.defaultUser;
         } else {
             this.userData = userData;
+        }
+        return this;
+    }
+
+    public Template setRelativeFolder(String relativeFolder) {
+        if (relativeFolder == null || relativeFolder.length() < 1) {
+            this.relativeFolder = "";
+        } else {
+            this.relativeFolder = relativeFolder;
         }
         return this;
     }

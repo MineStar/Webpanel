@@ -77,7 +77,7 @@ public class AdminStuffResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response getKickPlayer(@CookieParam(LoginCookie.COOKIE_NAME) LoginCookie cookie) {
         NewAuthHandler.check(cookie, UserLevel.MOD);
-        return Response.ok(Template.get("error404").build()).build();
+        return Response.ok(Template.get("error404").setRelativeFolder("../../").build()).build();
     }
 
     // /////////////////////////////////////////////////////////////////////
