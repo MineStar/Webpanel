@@ -24,6 +24,9 @@ import de.minestar.Webpanel.web.security.NewAuthHandler;
 @Path("AdminStuff")
 public class AdminStuffResource {
 
+    private static final String PATH_KICK = "kickPlayer";
+    private static final String PATH_BAN = "banPlayer";
+
     /**
      * Main method - show the menu
      */
@@ -49,20 +52,41 @@ public class AdminStuffResource {
         return Response.ok(template.build()).build();
     }
 
+    // /////////////////////////////////////////////////////////////////////
+    //
+    // KICK PLAYER
+    //
+    // /////////////////////////////////////////////////////////////////////
+
     @POST
-    @Path("kickPlayer")
-    @Produces(MediaType.TEXT_PLAIN)
+    @Path(PATH_KICK)
+    @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response clickKickPlayer(KickJSON json, @CookieParam(LoginCookie.COOKIE_NAME) LoginCookie cookie) {
-        UserData user = NewAuthHandler.check(cookie, UserLevel.MOD);
-        System.out.println("payload: " + json.getPlayerName() + " - " + json.getReason());
+    public Response postKickPlayer(MappedJSON json, @CookieParam(LoginCookie.COOKIE_NAME) LoginCookie cookie) {
+        NewAuthHandler.check(cookie, UserLevel.MOD);
+        System.out.println("payload: " + json.getValue("playerName") + " - " + json.getValue("reason"));
         // Handle kick
         String testResponse = "{'status':200, 'playerName':'testkickuser'}";
         testResponse = testResponse.replaceAll("'", "\"");
         return Response.ok(testResponse).build();
     }
 
-    @Path("banPlayer")
+    @GET
+    @Path(PATH_KICK)
+    @Produces(MediaType.TEXT_HTML)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response getKickPlayer(@CookieParam(LoginCookie.COOKIE_NAME) LoginCookie cookie) {
+        NewAuthHandler.check(cookie, UserLevel.MOD);
+        return Response.ok(Template.get("error404").build()).build();
+    }
+
+    // /////////////////////////////////////////////////////////////////////
+    //
+    // BAN PLAYER
+    //
+    // /////////////////////////////////////////////////////////////////////
+
+    @Path(PATH_BAN)
     @POST
     @Produces(MediaType.TEXT_HTML)
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
@@ -70,15 +94,5 @@ public class AdminStuffResource {
 
         // Handle ban
         return clickAdminStuff(cookie);
-    }
-
-    @Path("AS_godmode")
-    @POST
-    @Produces(MediaType.TEXT_HTML)
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    public Response clickGodPlayer(@FormParam("player") String userToKick, @CookieParam(LoginCookie.COOKIE_NAME) LoginCookie cookie) {
-
-        // Handle godmode
-        return Response.ok("okay!").build();
     }
 }
