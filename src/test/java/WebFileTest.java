@@ -26,7 +26,7 @@ public class WebFileTest extends JerseyTest {
 
     @Test
     public void loadImageFile() {
-        File imageFile = target("web").path("images/gui/btn_refresh.gif").request().get(File.class);
+        File imageFile = target("images/gui/btn_refresh.gif").request().get(File.class);
         assertNotNull(imageFile);
         assertEquals(221L, imageFile.length());
     }
@@ -34,19 +34,19 @@ public class WebFileTest extends JerseyTest {
     @Test(expected = NotFoundException.class)
     public void loadNotExistingImage() {
         // Access a resource not existing - expect 404
-        target("web").path("images/gui/btn_refresh.gi").request().get(File.class);
+        target("images/gui/btn_refresh.gi").request().get(File.class);
     }
 
     @Test
     public void loadCssFile() {
-        String cssContent = target("web").path("styles.css").request().get(String.class);
+        String cssContent = target("styles.css").request().get(String.class);
         assertNotNull(cssContent);
         assertFalse(cssContent.isEmpty());
     }
 
     @Test
     public void loadJqueryFile() {
-        String jqueryContent = target("web").path("scripts/jquery/jquery-1.10.2.js").request().get(String.class);
+        String jqueryContent = target("scripts/jquery/jquery-1.10.2.js").request().get(String.class);
         assertNotNull(jqueryContent);
         assertFalse(jqueryContent.isEmpty());
     }
