@@ -1,3 +1,4 @@
+package de.minestar.Webpanel;
 import static org.junit.Assert.assertEquals;
 
 import javax.ws.rs.core.Application;

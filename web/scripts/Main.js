@@ -144,8 +144,6 @@ $(document).ready(function() {
             requestPossible = 0;
             updateResponseDIV($responseField, 0);
             setHoverText($responseField, message);
-            
-            jsonData = "{\"data\":" + jsonData + "}";
                         
             // disable buttons
             disableAllElementsOfType(".button");

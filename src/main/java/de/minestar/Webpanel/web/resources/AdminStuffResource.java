@@ -1,8 +1,9 @@
 package de.minestar.Webpanel.web.resources;
 
+import java.util.Map;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.CookieParam;
-import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -14,8 +15,8 @@ import javax.ws.rs.core.UriInfo;
 
 import org.bukkit.Bukkit;
 
+import de.minestar.Webpanel.core.CommandQueue;
 import de.minestar.Webpanel.template.Template;
-import de.minestar.Webpanel.units.MappedJSON;
 import de.minestar.Webpanel.units.UserData;
 import de.minestar.Webpanel.units.UserLevel;
 import de.minestar.Webpanel.web.security.LoginCookie;
@@ -56,47 +57,55 @@ public class AdminStuffResource extends MainPageResource {
         return Response.ok(template.build()).build();
     }
 
-    // /////////////////////////////////////////////////////////////////////
-    //
-    // KICK PLAYER
-    //
-    // /////////////////////////////////////////////////////////////////////
-
+    /**
+     * Kick player
+     * 
+     * @param uriInfo
+     * @param map
+     * @param cookie
+     * @return
+     */
     @POST
     @Path(PATH_KICK)
     @Produces(MediaType.TEXT_PLAIN)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response postKickPlayer(@Context UriInfo uriInfo, MappedJSON json, @CookieParam(LoginCookie.COOKIE_NAME) LoginCookie cookie) {
+    public Response kickPlayer(@Context UriInfo uriInfo, Map<String, String> map, @CookieParam(LoginCookie.COOKIE_NAME) LoginCookie cookie) {
         NewAuthHandler.check(uriInfo, cookie, UserLevel.MOD);
-        System.out.println("payload: " + json.getValue("playerName") + " - " + json.getValue("reason"));
+
+        String playerName = map.get("playerName");
+        String reason = map.get("reason");
+
+        CommandQueue.queue("kick " + playerName + " " + reason);
+
         // Handle kick
-        String testResponse = "{'status':200, 'playerName':'testkickuser'}";
+        String testResponse = "{'status':200, 'playerName':'" + playerName + "'}";
         testResponse = testResponse.replaceAll("'", "\"");
         return Response.ok(testResponse).build();
     }
 
-    @GET
-    @Path(PATH_KICK)
-    @Produces(MediaType.TEXT_HTML)
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response getKickPlayer(@Context UriInfo uriInfo, @CookieParam(LoginCookie.COOKIE_NAME) LoginCookie cookie) {
-        NewAuthHandler.check(uriInfo, cookie, UserLevel.MOD);
-        return Response.ok(Template.get("error404").setRelativeFolder("../../").build()).build();
-    }
-
-    // /////////////////////////////////////////////////////////////////////
-    //
-    // BAN PLAYER
-    //
-    // /////////////////////////////////////////////////////////////////////
-
+    /**
+     * Ban player
+     * 
+     * @param uriInfo
+     * @param map
+     * @param cookie
+     * @return
+     */
     @Path(PATH_BAN)
     @POST
-    @Produces(MediaType.TEXT_HTML)
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    public Response clickBanPlayer(@Context UriInfo uriInfo, @FormParam("player") String userToKick, @FormParam("reason") String reason, @CookieParam(LoginCookie.COOKIE_NAME) LoginCookie cookie) {
+    @Produces(MediaType.TEXT_PLAIN)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response banPlayer(@Context UriInfo uriInfo, Map<String, String> map, @CookieParam(LoginCookie.COOKIE_NAME) LoginCookie cookie) {
+        NewAuthHandler.check(uriInfo, cookie, UserLevel.MOD);
 
-        // Handle ban
-        return index(uriInfo, cookie);
+        String playerName = map.get("playerName");
+        String reason = map.get("reason");
+
+        CommandQueue.queue("ban " + playerName + " " + reason);
+
+        // Handle kick
+        String testResponse = "{'status':200, 'playerName':'" + playerName + "', 'reason':'" + reason + "'}";
+        testResponse = testResponse.replaceAll("'", "\"");
+        return Response.ok(testResponse).build();
     }
 }
